@@ -5,6 +5,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 
+import java.util.concurrent.TimeUnit;
+
 public class OpenPageTest {
     protected static WebDriver driver;
     private Logger logger = LogManager.getLogger(OpenPageTest.class);
@@ -24,6 +26,7 @@ public class OpenPageTest {
 
     @Test
     public void openPage() {
+        driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
         driver.get("https://www.dns-shop.ru");
         logger.info("Открыта страница DNS-Shop - " + "https://www.dns-shop.ru");
 
