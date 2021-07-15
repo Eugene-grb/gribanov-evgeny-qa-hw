@@ -10,7 +10,6 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.CapabilityType;
-import org.openqa.selenium.remote.DesiredCapabilities;
 
 
 public class WebDriverFactory {
@@ -31,15 +30,15 @@ public class WebDriverFactory {
                 switch (loadPageOption) {
                     case "none":
                         chromeOptions.setPageLoadStrategy(PageLoadStrategy.NONE);
-                        logger.info("option = " + loadPageOption);
+                        logger.info("PageLoadStrategy = " + loadPageOption);
                         break;
                     case "eager":
                         chromeOptions.setPageLoadStrategy(PageLoadStrategy.EAGER);
-                        logger.info("option = " + loadPageOption);
+                        logger.info("PageLoadStrategy = " + loadPageOption);
                         break;
                     default:
                         chromeOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
-                        logger.info("option = " + loadPageOption);
+                        logger.info("PageLoadStrategy = " + loadPageOption);
                 }
 
                 chromeOptions.addArguments("--kiosk");
@@ -59,15 +58,15 @@ public class WebDriverFactory {
                 switch (loadPageOption) {
                     case "none":
                         firefoxOptions.setPageLoadStrategy(PageLoadStrategy.NONE);
-                        logger.info("option = " + loadPageOption);
+                        logger.info("PageLoadStrategy = " + loadPageOption);
                         break;
                     case "eager":
                         firefoxOptions.setPageLoadStrategy(PageLoadStrategy.EAGER);
-                        logger.info("option = " + loadPageOption);
+                        logger.info("PageLoadStrategy = " + loadPageOption);
                         break;
                     default:
                         firefoxOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
-                        logger.info("option = " + loadPageOption);
+                        logger.info("PageLoadStrategy = " + loadPageOption);
                 }
 
                 firefoxOptions.addArguments("-private");
