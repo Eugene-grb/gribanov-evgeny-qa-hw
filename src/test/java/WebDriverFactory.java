@@ -16,7 +16,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 public class WebDriverFactory {
     private static final Logger logger = LogManager.getLogger(WebDriverFactory.class);
 
-    public static WebDriver getDriver(String browserName) {
+    public static WebDriver getDriver(String browserName, String loadPageOption) {
         switch (browserName) {
             case "chrome":
                 WebDriverManager.chromedriver().setup();
@@ -27,9 +27,21 @@ public class WebDriverFactory {
                 chromeOptions.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, UnexpectedAlertBehaviour.DISMISS);
                 chromeOptions.setCapability(CapabilityType.SUPPORTS_JAVASCRIPT, false);
                 chromeOptions.setAcceptInsecureCerts(false);
-                chromeOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
 
-                // --start-maximized in windows
+                switch (loadPageOption) {
+                    case "none":
+                        chromeOptions.setPageLoadStrategy(PageLoadStrategy.NONE);
+                        logger.info("option = " + loadPageOption);
+                        break;
+                    case "eager":
+                        chromeOptions.setPageLoadStrategy(PageLoadStrategy.EAGER);
+                        logger.info("option = " + loadPageOption);
+                        break;
+                    default:
+                        chromeOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
+                        logger.info("option = " + loadPageOption);
+                }
+
                 chromeOptions.addArguments("--kiosk");
                 chromeOptions.addArguments("--incognito");
 
@@ -43,7 +55,20 @@ public class WebDriverFactory {
                 firefoxOptions.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, UnexpectedAlertBehaviour.DISMISS);
                 firefoxOptions.setCapability(CapabilityType.SUPPORTS_JAVASCRIPT, false);
                 firefoxOptions.setAcceptInsecureCerts(false);
-                firefoxOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
+
+                switch (loadPageOption) {
+                    case "none":
+                        firefoxOptions.setPageLoadStrategy(PageLoadStrategy.NONE);
+                        logger.info("option = " + loadPageOption);
+                        break;
+                    case "eager":
+                        firefoxOptions.setPageLoadStrategy(PageLoadStrategy.EAGER);
+                        logger.info("option = " + loadPageOption);
+                        break;
+                    default:
+                        firefoxOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
+                        logger.info("option = " + loadPageOption);
+                }
 
                 firefoxOptions.addArguments("-private");
                 firefoxOptions.addArguments("--kiosk");
