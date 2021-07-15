@@ -27,9 +27,9 @@ public class OpenPageTest {
         driver = WebDriverFactory.getDriver(env.toLowerCase(), loadPageOption.toLowerCase());
         logger.info("Драйвер стартовал!");
         // Ожидание загрузки страницы
-        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(10));
+        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(20));
         // Ожидание появления элемента
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
     }
 
     @Test
