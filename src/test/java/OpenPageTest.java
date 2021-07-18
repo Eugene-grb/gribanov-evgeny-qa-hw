@@ -2,11 +2,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.List;
@@ -26,14 +29,12 @@ public class OpenPageTest {
         logger.info("env = " + env);
         driver = WebDriverFactory.getDriver(env.toLowerCase(), loadPageOption.toLowerCase());
         logger.info("Драйвер стартовал!");
-        // Ожидание загрузки страницы
-        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(20));
-        // Ожидание появления элемента
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
     }
 
     @Test
     public void openPage() {
+        // Ожидание загрузки страницы
+        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(10));
         driver.get("https://www.dns-shop.ru");
         logger.info("Открыта страница DNS-Shop - https://www.dns-shop.ru");
 
@@ -52,11 +53,11 @@ public class OpenPageTest {
         elementok.click();
         logger.info("Закрыто подтверждение города");
 
-         // Нажать на бытовая техника
-        String button = "//*[contains(@href, 'bytovaya-texnika')]";
-        WebElement element = driver.findElement(By.xpath(button));
-        logger.info("WebElement: " + element.getTagName() + " = " + element.getText());
-        element.click();
+        // Нажать на бытовая техника
+       String button = "//a[@href='/catalog/17a8e9b716404e77/bytovaya-texnika/']";
+        WebElement catalogButton = new WebDriverWait(driver, Duration.ofSeconds(15))
+                .until(ExpectedConditions.elementToBeClickable(By.xpath(button)));
+        catalogButton.click();
         logger.info("Переход на страницу 'Бытовая техника'");
 
         // Вывод названий подкатегории в логгер
