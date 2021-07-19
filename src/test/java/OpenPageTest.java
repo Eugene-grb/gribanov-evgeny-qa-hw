@@ -2,7 +2,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
@@ -11,9 +10,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 public class OpenPageTest {
     protected static WebDriver driver;
@@ -32,9 +31,9 @@ public class OpenPageTest {
     }
 
     @Test
-    public void openPage() {
+    public void openPage() throws InterruptedException {
         // Ожидание загрузки страницы
-        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(10));
+        driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
         driver.get("https://www.dns-shop.ru");
         logger.info("Открыта страница DNS-Shop - https://www.dns-shop.ru");
 
@@ -55,9 +54,10 @@ public class OpenPageTest {
 
         // Нажать на бытовая техника
        String button = "//a[@href='/catalog/17a8e9b716404e77/bytovaya-texnika/']";
-        WebElement catalogButton = new WebDriverWait(driver, Duration.ofSeconds(15))
+        WebElement catalogButton = new WebDriverWait(driver, 5, 1000)
                 .until(ExpectedConditions.elementToBeClickable(By.xpath(button)));
-        catalogButton.click();
+        logger.info("WebElement: " + catalogButton.getTagName() + " = " + catalogButton.getText());
+
         logger.info("Переход на страницу 'Бытовая техника'");
 
         // Вывод названий подкатегории в логгер
@@ -65,13 +65,6 @@ public class OpenPageTest {
         List<WebElement> elements = driver.findElements(By.xpath(query));
         for (WebElement categoryElement : elements) {
             logger.info("WebElement: " + categoryElement.getTagName() + " = " + categoryElement.getText());
-        }
-
-        // Задержка 10 секунд
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
 
         // Добавление куки
