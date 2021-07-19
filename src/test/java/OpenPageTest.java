@@ -31,7 +31,7 @@ public class OpenPageTest {
     }
 
     @Test
-    public void openPage() throws InterruptedException {
+    public void openPage() {
         // Ожидание загрузки страницы
         driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
         driver.get("https://www.dns-shop.ru");
@@ -57,7 +57,6 @@ public class OpenPageTest {
         WebElement catalogButton = new WebDriverWait(driver, 5, 1000)
                 .until(ExpectedConditions.elementToBeClickable(By.xpath(button)));
         logger.info("WebElement: " + catalogButton.getTagName() + " = " + catalogButton.getText());
-
         logger.info("Переход на страницу 'Бытовая техника'");
 
         // Вывод названий подкатегории в логгер
@@ -65,6 +64,13 @@ public class OpenPageTest {
         List<WebElement> elements = driver.findElements(By.xpath(query));
         for (WebElement categoryElement : elements) {
             logger.info("WebElement: " + categoryElement.getTagName() + " = " + categoryElement.getText());
+        }
+
+        // Задержка 10 секунд
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
         // Добавление куки
