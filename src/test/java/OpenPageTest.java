@@ -3,23 +3,20 @@ import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Cookie;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 public class OpenPageTest {
     protected static WebDriver driver;
     private final Logger logger = LogManager.getLogger(OpenPageTest.class);
 
-    // mvn clean test -Dbrowser=chrome -Doption=eager
-    String env = System.getProperty("browser", "firefox");
+    // mvn clean test -Dbrowser=chrome -Doption=normal
+    String env = System.getProperty("browser", "chrome");
     String loadPageOption = System.getProperty("option", "normal");
 
 
@@ -33,7 +30,7 @@ public class OpenPageTest {
     @Test
     public void openPage() {
         // Ожидание загрузки страницы
-        driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
         driver.get("https://www.dns-shop.ru");
         logger.info("Открыта страница DNS-Shop - https://www.dns-shop.ru");
 
@@ -46,18 +43,20 @@ public class OpenPageTest {
         logger.info("Текущий URL: " + currentUrl);
 
         //  Закрыть плашку подтверждение города
-        String buttonok = "//a[normalize-space(text())='Да']";
+        String buttonok = "//a[contains(text(),'Да')]";
         WebElement elementok = driver.findElement(By.xpath(buttonok));
         logger.info("WebElement: " + elementok.getTagName() + " = " + elementok.getText());
         elementok.click();
         logger.info("Закрыто подтверждение города");
 
+
         // Нажать на бытовая техника
-       String button = "//a[@href='/catalog/17a8e9b716404e77/bytovaya-texnika/']";
-        WebElement catalogButton = new WebDriverWait(driver, 5, 1000)
-                .until(ExpectedConditions.elementToBeClickable(By.xpath(button)));
+       String catalogButtonOK = "//a[contains(text(),'Бытовая техника')]";
+        WebElement catalogButton = new WebDriverWait(driver, Duration.ofSeconds(30))
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath(catalogButtonOK)));
         logger.info("WebElement: " + catalogButton.getTagName() + " = " + catalogButton.getText());
         logger.info("Переход на страницу 'Бытовая техника'");
+       catalogButton.click();
 
         // Вывод названий подкатегории в логгер
         String query = "//span[contains(@class, 'subcategory__title')]";
