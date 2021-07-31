@@ -16,31 +16,38 @@ public class WebDriverFactory {
     private static final Logger logger = LogManager.getLogger(WebDriverFactory.class);
 
     public static WebDriver getDriver(String browserName, String loadPageOption) {
+
+        // Стратегия загрузки страницы
+        PageLoadStrategy pageLoadStrategy;
+        switch (loadPageOption) {
+            case "none":
+                pageLoadStrategy = PageLoadStrategy.NONE;
+                logger.info("PageLoadStrategy = " + loadPageOption);
+                break;
+            case "eager":
+                pageLoadStrategy = PageLoadStrategy.EAGER;
+                logger.info("PageLoadStrategy = " + loadPageOption);
+                break;
+            default:
+                pageLoadStrategy = PageLoadStrategy.NORMAL;
+                logger.info("PageLoadStrategy = " + loadPageOption);
+        }
+
+        // Создание вебдрайвера
         switch (browserName) {
             case "chrome":
                 WebDriverManager.chromedriver().setup();
                 logger.info("Драйвер для браузера Google Chrome");
 
                 ChromeOptions chromeOptions = new ChromeOptions();
+                chromeOptions.setCapability(CapabilityType.PAGE_LOAD_STRATEGY, pageLoadStrategy);
+                logger.info("Стратегии загрузки страницы: " + pageLoadStrategy);
                 chromeOptions.setCapability(CapabilityType.PLATFORM_NAME, Platform.ANY);
                 chromeOptions.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, UnexpectedAlertBehaviour.DISMISS);
                 chromeOptions.setCapability(CapabilityType.SUPPORTS_JAVASCRIPT, false);
                 chromeOptions.setAcceptInsecureCerts(false);
 
-                switch (loadPageOption) {
-                    case "none":
-                        chromeOptions.setPageLoadStrategy(PageLoadStrategy.NONE);
-                        logger.info("PageLoadStrategy = " + loadPageOption);
-                        break;
-                    case "eager":
-                        chromeOptions.setPageLoadStrategy(PageLoadStrategy.EAGER);
-                        logger.info("PageLoadStrategy = " + loadPageOption);
-                        break;
-                    default:
-                        chromeOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
-                        logger.info("PageLoadStrategy = " + loadPageOption);
-                }
-
+                // Аргументы запуска
                 chromeOptions.addArguments("--kiosk");
                 chromeOptions.addArguments("--incognito");
 
@@ -50,25 +57,14 @@ public class WebDriverFactory {
                 logger.info("Драйвер для браузера Mozilla Firefox");
 
                 FirefoxOptions firefoxOptions = new FirefoxOptions();
+                firefoxOptions.setCapability(CapabilityType.PAGE_LOAD_STRATEGY, pageLoadStrategy);
+                logger.info("Стратегии загрузки страницы: " + pageLoadStrategy);
                 firefoxOptions.setCapability(CapabilityType.PLATFORM_NAME, Platform.ANY);
                 firefoxOptions.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, UnexpectedAlertBehaviour.DISMISS);
                 firefoxOptions.setCapability(CapabilityType.SUPPORTS_JAVASCRIPT, false);
                 firefoxOptions.setAcceptInsecureCerts(false);
 
-                switch (loadPageOption) {
-                    case "none":
-                        firefoxOptions.setPageLoadStrategy(PageLoadStrategy.NONE);
-                        logger.info("PageLoadStrategy = " + loadPageOption);
-                        break;
-                    case "eager":
-                        firefoxOptions.setPageLoadStrategy(PageLoadStrategy.EAGER);
-                        logger.info("PageLoadStrategy = " + loadPageOption);
-                        break;
-                    default:
-                        firefoxOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
-                        logger.info("PageLoadStrategy = " + loadPageOption);
-                }
-
+                // Аргументы запуска
                 firefoxOptions.addArguments("-private");
                 firefoxOptions.addArguments("--kiosk");
 

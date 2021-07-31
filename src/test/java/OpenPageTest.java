@@ -65,12 +65,6 @@ public class OpenPageTest {
             logger.info("WebElement: " + categoryElement.getTagName() + " = " + categoryElement.getText());
         }
 
-        // Задержка 10 секунд
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
         // Добавление куки
         logger.info("Добавляем наши куки");
@@ -93,6 +87,13 @@ public class OpenPageTest {
             logger.info(String.format("Path: %s", cookie.getPath()));
             logger.info(String.format("Value: %s", cookie.getValue()));
             logger.info("--------------------------------------");
+        }
+
+        // Задержка 10 секунд
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
