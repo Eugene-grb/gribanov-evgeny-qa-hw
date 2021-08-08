@@ -50,10 +50,19 @@ public class OpenPageTest {
                 "//a[@class='ui-link menu-desktop__root-title' and contains(text(),'Смартфоны и гаджеты')]";
         String samsungSubcategoryButton =
                 "//label[@class='ui-checkbox ui-checkbox_list']/descendant-or-self::*[@value='samsung']";
+        String ramSubcategoryButton =
+                "//*[@class='ui-list-controls ui-collapse ui-collapse_list']/descendant-or-self::*[text()='Объем оперативной памяти']";
         String smartphoneSubcategoryButton =
                 "//*[@class='ui-link menu-desktop__second-level']/descendant-or-self::*[text()='Смартфоны']";
+        String ram8GbButton =
+                "//label[@class='ui-checkbox ui-checkbox_list']/descendant-or-self::*[@value='i2ft']";
         String applyFiltersFloatButton =
                 "//div[@class='apply-filters-float-btn']";
+        String sortCheapButton =
+                "//a[@class='ui-link ui-link_blue']/descendant-or-self::*[text()='Сначала недорогие']";
+        String sortExpensiveButton =
+                "//span[@class='ui-radio__content']/descendant-or-self::*[text()='Сначала дорогие']";
+
 
         // Открыть страницу
         runDriver("https://www.dns-shop.ru/");
@@ -63,8 +72,8 @@ public class OpenPageTest {
         logger.info("Закрыто подтверждение города");
 
         // Открыть подменю смартфоны и гаджеты
-        WebElement element = driver.findElement(By.xpath(smartphonesMainCatalogButton));
-        action.moveToElement(element).perform();
+        WebElement smartphonesSubcategoryElement = driver.findElement(By.xpath(smartphonesMainCatalogButton));
+        action.moveToElement(smartphonesSubcategoryElement).perform();
 
         // Нажать на смартфоны
         pressButton(smartphoneSubcategoryButton);
@@ -73,16 +82,33 @@ public class OpenPageTest {
         takePageSnapshot("smartphonesPage", "temp");
 
         // Скролл для активации меню фильтров
-        js.executeScript("window.scrollBy(0, 500)");
+        js.executeScript("window.scrollBy(0, 1100)");
+
+        // Раскрыть меню подкатегории
+        pressButton(ramSubcategoryButton);
+
+        // Нажать на фильтр 8 Гб
+        pressButton(ram8GbButton);
 
         // Фильтр по производителю Samsung
         pressButton(samsungSubcategoryButton);
 
-        // Подтвердить фильтр
+        // Подтвердить все фильтры
         pressButton(applyFiltersFloatButton);
 
+        // Ожидание возврата страницы вверх
+        try {
+            Sleeper.SYSTEM_SLEEPER.sleep(Duration.ofSeconds(3));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // Нажатие кнопки сортировки по цене
+        pressButton(sortCheapButton);
+        pressButton(sortExpensiveButton);
+
         // Сделать скриншот страницы
-        takePageSnapshot("SamsungFilterApply", "temp");
+        takePageSnapshot("AllFiltersApply", "temp");
 
 //        // Вывод названий подкатегории в логгер
 //        String query = "//span[contains(@class, 'subcategory__title')]";
@@ -131,16 +157,22 @@ public class OpenPageTest {
         }
     }
 
-    public void pressButton(String path) {
+    /**
+     * Нажатие на элемент с проверкой на появление его в DOM
+     * @param xpath путь до элемента
+     */
+    public void pressButton(String xpath) {
         Actions action = new Actions(driver);
         WebElement pressButton = new WebDriverWait(driver, Duration.ofSeconds(15))
-                .until(ExpectedConditions.presenceOfElementLocated(By.xpath(path)));
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath)));
         logger.info("WebElement: " + pressButton.getTagName());
         action.moveToElement(pressButton).click().perform();
     }
 
-
-
+    /**
+     * Запускает драйвер и выводит в логгер информацию о странице
+     * @param https ссылка на страницу
+     */
     public void runDriver(String https) {
         driver.get(https);
         String title = driver.getTitle();
