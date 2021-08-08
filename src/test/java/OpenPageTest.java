@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Sleeper;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.yandex.qatools.ashot.AShot;
 import ru.yandex.qatools.ashot.Screenshot;
@@ -16,9 +17,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
 import java.time.Duration;
-import java.util.Date;
+
 
 public class OpenPageTest {
     protected static WebDriver driver;
@@ -40,37 +40,49 @@ public class OpenPageTest {
     public void openPage() {
         // Ожидание загрузки страницы
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
+        Actions action = new Actions(driver);
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        // Локаторы
+        String cityConfirmButton =
+                "//a[contains(@rel, 'nofollow noopener')]";
+        String smartphonesMainCatalogButton =
+                "//a[@class='ui-link menu-desktop__root-title' and contains(text(),'Смартфоны и гаджеты')]";
+        String samsungSubcategoryButton =
+                "//label[@class='ui-checkbox ui-checkbox_list']/descendant-or-self::*[@value='samsung']";
+        String smartphoneSubcategoryButton =
+                "//*[@class='ui-link menu-desktop__second-level']/descendant-or-self::*[text()='Смартфоны']";
+        String applyFiltersFloatButton =
+                "//div[@class='apply-filters-float-btn']";
+
+        // Открыть страницу
         runDriver("https://www.dns-shop.ru/");
 
         //  Закрыть плашку подтверждение города
-        String cityConfirmButton = "//a[contains(@rel, 'nofollow noopener')]";
         pressButton(cityConfirmButton);
         logger.info("Закрыто подтверждение города");
 
-        // Нажать на смартфоны и гаджеты
-        String smartphonesMainCatalogButton =
-                "//a[@class='ui-link menu-desktop__root-title' and contains(text(),'Смартфоны и гаджеты')]";
+        // Открыть подменю смартфоны и гаджеты
         WebElement element = driver.findElement(By.xpath(smartphonesMainCatalogButton));
-
-        // Выбрать категорию, открыть всплывающее меню
-        Actions action = new Actions(driver);
         action.moveToElement(element).perform();
-        String smartphoneSubcategoryButton =
-                "//*[@class='ui-link menu-desktop__second-level']/descendant-or-self::*[text()='Смартфоны']";
+
+        // Нажать на смартфоны
         pressButton(smartphoneSubcategoryButton);
 
         // Сделать скриншот страницы
         takePageSnapshot("smartphonesPage", "temp");
 
-        String samsungSubcategoryButton =
-                "//label[@class='ui-checkbox ui-checkbox_list']/descendant-or-self::*[@value='samsung']";
-        WebElement pressButtonss = new WebDriverWait(driver, Duration.ofSeconds(25))
-                .until(ExpectedConditions.presenceOfElementLocated(By.xpath(samsungSubcategoryButton)));
-        action.moveToElement(pressButtonss).click().perform();
+        // Скролл для активации меню фильтров
+        js.executeScript("window.scrollBy(0, 500)");
 
-        String buttonOK = "//button[contains(text(),'Применить')]";
-        pressButton(buttonOK);
-        takePageSnapshot("2", "temp");
+        // Фильтр по производителю Samsung
+        pressButton(samsungSubcategoryButton);
+
+        // Подтвердить фильтр
+        pressButton(applyFiltersFloatButton);
+
+        // Сделать скриншот страницы
+        takePageSnapshot("SamsungFilterApply", "temp");
 
 //        // Вывод названий подкатегории в логгер
 //        String query = "//span[contains(@class, 'subcategory__title')]";
@@ -105,7 +117,7 @@ public class OpenPageTest {
 
         // Задержка 10 секунд
         try {
-            Thread.sleep(19000);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -120,34 +132,37 @@ public class OpenPageTest {
     }
 
     public void pressButton(String path) {
+        Actions action = new Actions(driver);
         WebElement pressButton = new WebDriverWait(driver, Duration.ofSeconds(15))
                 .until(ExpectedConditions.presenceOfElementLocated(By.xpath(path)));
-        logger.info("WebElement: " + pressButton.getTagName() + " = " + pressButton.getText());
-        pressButton.click();
+        logger.info("WebElement: " + pressButton.getTagName());
+        action.moveToElement(pressButton).click().perform();
     }
+
+
 
     public void runDriver(String https) {
         driver.get(https);
-        logger.info("Открыта страница - " + https);
-
-        // Вывод заголовка страницы
         String title = driver.getTitle();
-        logger.info("Заголовок: " + title);
-
-        // Вывод текущего URL
         String currentUrl = driver.getCurrentUrl();
+
+        logger.info("Открыта страница - " + https);
+        logger.info("Заголовок: " + title);
         logger.info("Текущий URL: " + currentUrl);
     }
 
     /**
      * Функция делает скриншот страницы с заданным именем и названием директории
      * Если директория отсутствует, то создает ее
-     * @param nameFile имя файла, в конец автоматически добавляется дата и время создания скриншота
+     * @param nameFile имя файла
      * @param nameDirectory название директории в корне проекта по умолчанию
      */
     public void takePageSnapshot(String nameFile, String nameDirectory) {
         try {
-            String fileDate = new SimpleDateFormat("dd.MM.yyyy-HH:mm").format(new Date());
+            //TODO: fileDate work on java 16 only
+           // String fileDate = new SimpleDateFormat("dd.MM.yyyy-HH:mm").format(new Date());
+            // Задержка для воспроизведения анимации, подгрузки элементов
+            Sleeper.SYSTEM_SLEEPER.sleep(Duration.ofSeconds(3));
             Path path = Paths.get(nameDirectory);
             if(!Files.exists(path)) {
                 try {
@@ -157,9 +172,9 @@ public class OpenPageTest {
                 }
             }
             Screenshot screenshot = new AShot().takeScreenshot(driver);
-            ImageIO.write(screenshot.getImage(), "png", new File(nameDirectory, nameFile + "_" + fileDate +".png"));
+            ImageIO.write(screenshot.getImage(), "png", new File(nameDirectory, nameFile + "_"+ env +".png"));
             logger.info("Скриншот под именем " + nameFile + " сохранен в директории " + nameDirectory);
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
