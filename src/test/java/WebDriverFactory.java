@@ -48,7 +48,7 @@ public class WebDriverFactory {
                 chromeOptions.setAcceptInsecureCerts(false);
 
                 // Аргументы запуска
-                chromeOptions.addArguments("--kiosk");
+               // chromeOptions.addArguments("--kiosk");
                 chromeOptions.addArguments("--incognito");
 
                 return new ChromeDriver(chromeOptions);
@@ -66,7 +66,7 @@ public class WebDriverFactory {
 
                 // Аргументы запуска
                 firefoxOptions.addArguments("-private");
-                firefoxOptions.addArguments("--kiosk");
+               // firefoxOptions.addArguments("--kiosk");
 
                 return new FirefoxDriver(firefoxOptions);
             default:

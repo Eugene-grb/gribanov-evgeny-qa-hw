@@ -20,7 +20,7 @@ import java.nio.file.Paths;
 import java.time.Duration;
 
 
-public class OpenPageTest {
+public class OpenPageTest extends PageLocators {
     protected static WebDriver driver;
     private final Logger logger = LogManager.getLogger(OpenPageTest.class);
 
@@ -38,31 +38,12 @@ public class OpenPageTest {
 
     @Test
     public void openPage() {
-        // Ожидание загрузки страницы
-        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
         Actions action = new Actions(driver);
         JavascriptExecutor js = (JavascriptExecutor) driver;
 
-        // Локаторы
-        String cityConfirmButton =
-                "//a[contains(@rel, 'nofollow noopener')]";
-        String smartphonesMainCatalogButton =
-                "//a[@class='ui-link menu-desktop__root-title' and contains(text(),'Смартфоны и гаджеты')]";
-        String samsungSubcategoryButton =
-                "//label[@class='ui-checkbox ui-checkbox_list']/descendant-or-self::*[@value='samsung']";
-        String ramSubcategoryButton =
-                "//*[@class='ui-list-controls ui-collapse ui-collapse_list']/descendant-or-self::*[text()='Объем оперативной памяти']";
-        String smartphoneSubcategoryButton =
-                "//*[@class='ui-link menu-desktop__second-level']/descendant-or-self::*[text()='Смартфоны']";
-        String ram8GbButton =
-                "//label[@class='ui-checkbox ui-checkbox_list']/descendant-or-self::*[@value='i2ft']";
-        String applyFiltersFloatButton =
-                "//div[@class='apply-filters-float-btn']";
-        String sortCheapButton =
-                "//a[@class='ui-link ui-link_blue']/descendant-or-self::*[text()='Сначала недорогие']";
-        String sortExpensiveButton =
-                "//span[@class='ui-radio__content']/descendant-or-self::*[text()='Сначала дорогие']";
-
+        // Ожидание загрузки страницы
+        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
+        driver.manage().window().maximize();
 
         // Открыть страницу
         runDriver("https://www.dns-shop.ru/");
@@ -72,8 +53,7 @@ public class OpenPageTest {
         logger.info("Закрыто подтверждение города");
 
         // Открыть подменю смартфоны и гаджеты
-        WebElement smartphonesSubcategoryElement = driver.findElement(By.xpath(smartphonesMainCatalogButton));
-        action.moveToElement(smartphonesSubcategoryElement).perform();
+        selectElement(smartphonesMainCatalogButton);
 
         // Нажать на смартфоны
         pressButton(smartphoneSubcategoryButton);
@@ -110,40 +90,14 @@ public class OpenPageTest {
         // Сделать скриншот страницы
         takePageSnapshot("AllFiltersApply", "temp");
 
-//        // Вывод названий подкатегории в логгер
-//        String query = "//span[contains(@class, 'subcategory__title')]";
-//        List<WebElement> elements = driver.findElements(By.xpath(query));
-//        for (WebElement categoryElement : elements) {
-//            logger.info("WebElement: " + categoryElement.getTagName() + " = " + categoryElement.getText());
-//        }
+        openInNewWindow(productList);
 
+        takePageSnapshot("newWindowFirstResult", "temp");
 
-//        // Добавление куки
-//        logger.info("Добавляем наши куки");
-//        driver.manage().addCookie(new Cookie("Our Cookie", "Это наши куки"));
-//        Cookie cookie1  = driver.manage().getCookieNamed("Our Cookie");
-//        logger.info(String.format("Domain: %s", cookie1.getDomain()));
-//        logger.info(String.format("Expiry: %s",cookie1.getExpiry()));
-//        logger.info(String.format("Name: %s",cookie1.getName()));
-//        logger.info(String.format("Path: %s",cookie1.getPath()));
-//        logger.info(String.format("Value: %s",cookie1.getValue()));
-//        logger.info("--------------------------------------");
-//
-//        // Вывод информации по кукам DNS-Shop
-//        logger.info("Куки, которое добавил DNS-Shop");
-//        Set<Cookie> cookies = driver.manage().getCookies();
-//        for(Cookie cookie : cookies) {
-//            logger.info(String.format("Domain: %s", cookie.getDomain()));
-//            logger.info(String.format("Expiry: %s", cookie.getExpiry()));
-//            logger.info(String.format("Name: %s", cookie.getName()));
-//            logger.info(String.format("Path: %s", cookie.getPath()));
-//            logger.info(String.format("Value: %s", cookie.getValue()));
-//            logger.info("--------------------------------------");
-//        }
 
         // Задержка 10 секунд
         try {
-            Thread.sleep(5000);
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -158,6 +112,34 @@ public class OpenPageTest {
     }
 
     /**
+     * Открывает ссылку из элемента xpath в новом окне и переключает драйвер на него
+     * @param xpath элемент содержащий ссылку на страницу
+     */
+    public void openInNewWindow(String xpath) {
+        WebElement element = driver.findElement(By.xpath(xpath));
+        new Actions(driver)
+                .keyDown(Keys.LEFT_SHIFT)
+                .click(element)
+                .perform();
+        for(String winHandle : driver.getWindowHandles()) {
+            driver.switchTo().window(winHandle);
+        }
+        driver.manage().window().maximize();
+    }
+
+    /**
+     * Выделяет веб элемент и выводит информацию о нем в логгер
+     * @param xpath путь до элемента
+     */
+    public void selectElement(String xpath) {
+        Actions action = new Actions(driver);
+        WebElement selectedElement = new WebDriverWait(driver, Duration.ofSeconds(15))
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath)));
+        logger.info("Выделен WebElement: "  + selectedElement.getText());
+        action.moveToElement(selectedElement).perform();
+    }
+
+    /**
      * Нажатие на элемент с проверкой на появление его в DOM
      * @param xpath путь до элемента
      */
@@ -165,7 +147,7 @@ public class OpenPageTest {
         Actions action = new Actions(driver);
         WebElement pressButton = new WebDriverWait(driver, Duration.ofSeconds(15))
                 .until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath)));
-        logger.info("WebElement: " + pressButton.getTagName());
+        logger.info("Нажат WebElement: " + pressButton.getTagName() + " под именем " + pressButton.getText());
         action.moveToElement(pressButton).click().perform();
     }
 
