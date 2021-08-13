@@ -81,13 +81,6 @@ public class OpenPageTest extends PageLocators {
         logger.info("-- Подтвердить все фильтры");
         pressButton(By.xpath(applyFiltersFloatButton));
 
-        // Ожидание возврата страницы вверх
-        try {
-            Sleeper.SYSTEM_SLEEPER.sleep(Duration.ofSeconds(3));
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
         logger.info("-- Нажатие кнопки сортировки по цене");
         pressButton(By.xpath(sortCheapButton));
         pressButton(By.xpath(sortExpensiveButton));
@@ -109,9 +102,9 @@ public class OpenPageTest extends PageLocators {
 
         // Найти элемент справа от элемента для сравнения
         WebElement tableRamElement = new WebDriverWait(driver, Duration.ofSeconds(15))
-                .until(ExpectedConditions.presenceOfElementLocated(RelativeLocator.
-                        with(By.xpath(tableRamLeft)).
-                        toRightOf(By.xpath(tableRam))));
+                .until(ExpectedConditions.presenceOfElementLocated(RelativeLocator
+                        .with(By.xpath(tableRamLeft))
+                        .toRightOf(By.xpath(tableRam))));
         logger.info("WebElement для проверки: " + tableRamElement.getTagName() + " содержит: " + tableRamElement.getText());
 
         // Проверки
@@ -119,15 +112,8 @@ public class OpenPageTest extends PageLocators {
         String actualTitle  = driver.getTitle();
         String expectedTitle = "Технические характеристики 6.7\" Смартфон Samsung Galaxy Z Flip3 256 ГБ бежевый | 4845670 . Интернет-магазин DNS";
 
-        Assertions.assertEquals("8 Гб", attributeValue, "Значение attributeValue != 8 Гб!");
-        Assertions.assertEquals(expectedTitle, actualTitle, "Заголовок страницы не соответствует Samsung Galaxy Z Flip3 256 ГБ бежевый");
-
-        // Задержка 10 секунд
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Assertions.assertEquals("8 Гб", attributeValue, "Значение поля != 8 Гб!");
+        Assertions.assertEquals(expectedTitle, actualTitle, "Заголовок страницы не соответствует ожидаемому Samsung Galaxy Z Flip3");
     }
 
     @AfterEach
@@ -217,5 +203,4 @@ public class OpenPageTest extends PageLocators {
             e.printStackTrace();
         }
     }
-
 }
