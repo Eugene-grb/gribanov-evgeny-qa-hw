@@ -1,10 +1,12 @@
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.locators.RelativeLocator;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Sleeper;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -38,43 +40,46 @@ public class OpenPageTest extends PageLocators {
 
     @Test
     public void openPage() {
-        Actions action = new Actions(driver);
         JavascriptExecutor js = (JavascriptExecutor) driver;
+        Actions actions = new Actions(driver);
 
-        // Ожидание загрузки страницы
+        // Предустановки драйвера
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
         driver.manage().window().maximize();
 
-        // Открыть страницу
+        logger.info("-- Открыть страницу");
         runDriver("https://www.dns-shop.ru/");
 
-        //  Закрыть плашку подтверждение города
-        pressButton(cityConfirmButton);
-        logger.info("Закрыто подтверждение города");
+        logger.info("-- Закрыть плашку подтверждение города");
+        pressButton(By.xpath(cityConfirmButton));
 
-        // Открыть подменю смартфоны и гаджеты
+        logger.info("-- Открыть подменю смартфоны и гаджеты");
         selectElement(smartphonesMainCatalogButton);
 
-        // Нажать на смартфоны
-        pressButton(smartphoneSubcategoryButton);
+        logger.info("-- Нажать на смартфоны");
+        pressButton(By.xpath(smartphoneSubcategoryButton));
 
-        // Сделать скриншот страницы
+        logger.info("-- Сделать скриншот страницы");
         takePageSnapshot("smartphonesPage", "temp");
 
-        // Скролл для активации меню фильтров
-        js.executeScript("window.scrollBy(0, 1100)");
+        // Особенности поиска динамических элементов в firefox
+        logger.info("-- Скролл для активации меню фильтров");
+        js.executeScript("window.scrollBy(0, 1400)");
 
-        // Раскрыть меню подкатегории
-        pressButton(ramSubcategoryButton);
+        // Отдельная логика для правильной работы локатора
+        logger.info("-- Раскрыть меню подкатегории");
+        WebElement selectedElement = new WebDriverWait(driver, Duration.ofSeconds(15))
+                .until(ExpectedConditions.presenceOfElementLocated(By.linkText("Объем оперативной памяти")));
+        actions.moveToElement(selectedElement).click().perform();
 
-        // Нажать на фильтр 8 Гб
-        pressButton(ram8GbButton);
+        logger.info("-- Нажать на фильтр 8 Гб");
+        pressButton(By.xpath(ram8GbButton));
 
-        // Фильтр по производителю Samsung
-        pressButton(samsungSubcategoryButton);
+        logger.info("-- Фильтр по производителю Samsung");
+        pressButton(By.xpath(samsungSubcategoryButton));
 
-        // Подтвердить все фильтры
-        pressButton(applyFiltersFloatButton);
+        logger.info("-- Подтвердить все фильтры");
+        pressButton(By.xpath(applyFiltersFloatButton));
 
         // Ожидание возврата страницы вверх
         try {
@@ -83,17 +88,39 @@ public class OpenPageTest extends PageLocators {
             e.printStackTrace();
         }
 
-        // Нажатие кнопки сортировки по цене
-        pressButton(sortCheapButton);
-        pressButton(sortExpensiveButton);
+        logger.info("-- Нажатие кнопки сортировки по цене");
+        pressButton(By.xpath(sortCheapButton));
+        pressButton(By.xpath(sortExpensiveButton));
 
-        // Сделать скриншот страницы
+        logger.info("-- Сделать скриншот страницы");
         takePageSnapshot("AllFiltersApply", "temp");
 
+        logger.info("-- Открыть страницу в новом окне");
         openInNewWindow(productList);
 
+        logger.info("-- Сделать скриншот страницы");
         takePageSnapshot("newWindowFirstResult", "temp");
 
+        // Отдельная логика для правильной работы локатора
+        logger.info("-- Перейти к характеристикам");
+        WebElement characteristicFieldElement = new WebDriverWait(driver, Duration.ofSeconds(15))
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath(characteristicField)));
+        characteristicFieldElement.click();
+
+        // Найти элемент справа от элемента для сравнения
+        WebElement tableRamElement = new WebDriverWait(driver, Duration.ofSeconds(15))
+                .until(ExpectedConditions.presenceOfElementLocated(RelativeLocator.
+                        with(By.xpath(tableRamLeft)).
+                        toRightOf(By.xpath(tableRam))));
+        logger.info("WebElement для проверки: " + tableRamElement.getTagName() + " содержит: " + tableRamElement.getText());
+
+        // Проверки
+        String attributeValue = tableRamElement.getText();
+        String actualTitle  = driver.getTitle();
+        String expectedTitle = "Технические характеристики 6.7\" Смартфон Samsung Galaxy Z Flip3 256 ГБ бежевый | 4845670 . Интернет-магазин DNS";
+
+        Assertions.assertEquals("8 Гб", attributeValue, "Значение attributeValue != 8 Гб!");
+        Assertions.assertEquals(expectedTitle, actualTitle, "Заголовок страницы не соответствует Samsung Galaxy Z Flip3 256 ГБ бежевый");
 
         // Задержка 10 секунд
         try {
@@ -121,8 +148,8 @@ public class OpenPageTest extends PageLocators {
                 .keyDown(Keys.LEFT_SHIFT)
                 .click(element)
                 .perform();
-        for(String winHandle : driver.getWindowHandles()) {
-            driver.switchTo().window(winHandle);
+        for(String windowHandle : driver.getWindowHandles()) {
+            driver.switchTo().window(windowHandle);
         }
         driver.manage().window().maximize();
     }
@@ -141,13 +168,13 @@ public class OpenPageTest extends PageLocators {
 
     /**
      * Нажатие на элемент с проверкой на появление его в DOM
-     * @param xpath путь до элемента
+     * @param by путь до элемента
      */
-    public void pressButton(String xpath) {
+    public void pressButton(By by) {
         Actions action = new Actions(driver);
         WebElement pressButton = new WebDriverWait(driver, Duration.ofSeconds(15))
-                .until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath)));
-        logger.info("Нажат WebElement: " + pressButton.getTagName() + " под именем " + pressButton.getText());
+                .until(ExpectedConditions.presenceOfElementLocated(by));
+        logger.info("Нажат WebElement: " + pressButton.getTagName() + " под именем: " + pressButton.getText());
         action.moveToElement(pressButton).click().perform();
     }
 
@@ -173,8 +200,6 @@ public class OpenPageTest extends PageLocators {
      */
     public void takePageSnapshot(String nameFile, String nameDirectory) {
         try {
-            //TODO: fileDate work on java 16 only
-           // String fileDate = new SimpleDateFormat("dd.MM.yyyy-HH:mm").format(new Date());
             // Задержка для воспроизведения анимации, подгрузки элементов
             Sleeper.SYSTEM_SLEEPER.sleep(Duration.ofSeconds(3));
             Path path = Paths.get(nameDirectory);
@@ -187,7 +212,7 @@ public class OpenPageTest extends PageLocators {
             }
             Screenshot screenshot = new AShot().takeScreenshot(driver);
             ImageIO.write(screenshot.getImage(), "png", new File(nameDirectory, nameFile + "_"+ env +".png"));
-            logger.info("Скриншот под именем " + nameFile + " сохранен в директории " + nameDirectory);
+            logger.info("Скриншот под именем: " + nameFile + " сохранен в директории: " + nameDirectory);
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
