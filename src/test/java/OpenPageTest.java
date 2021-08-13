@@ -81,13 +81,6 @@ public class OpenPageTest extends PageLocators {
         logger.info("-- Подтвердить все фильтры");
         pressButton(By.xpath(applyFiltersFloatButton));
 
-        // Ожидание возврата страницы вверх
-        try {
-            Sleeper.SYSTEM_SLEEPER.sleep(Duration.ofSeconds(3));
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
         logger.info("-- Нажатие кнопки сортировки по цене");
         pressButton(By.xpath(sortCheapButton));
         pressButton(By.xpath(sortExpensiveButton));
