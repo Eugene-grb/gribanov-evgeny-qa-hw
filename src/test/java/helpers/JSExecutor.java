@@ -27,4 +27,10 @@ public class JSExecutor {
         String script = "arguments[0].style.display='none';";
         js.executeScript(script, element);
     }
+
+     /** Возвращает true при загрузке страницы */
+    public boolean pageIsLoaded(WebDriver driver) {
+        return js.executeScript("return document.readyState").equals("complete");
+    }
+
 }
