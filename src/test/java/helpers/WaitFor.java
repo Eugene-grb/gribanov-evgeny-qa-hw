@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.locators.RelativeLocator;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -24,6 +25,12 @@ public class WaitFor {
     /** Ожидание наличия элемента по локатору */
     public static void presenceOfElementLocated(By webElement) {
         wait.until(ExpectedConditions.presenceOfElementLocated(webElement));
+    }
+
+    public static void presenceOfElementLocatedRight(By mainWebElement, By rightWebElement) {
+        wait.until(ExpectedConditions.presenceOfElementLocated(RelativeLocator
+                .with(rightWebElement)
+                .toRightOf(mainWebElement)));
     }
 
     /** Ожидание появления текста в элементе */

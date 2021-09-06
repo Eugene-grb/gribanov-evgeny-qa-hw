@@ -29,7 +29,7 @@ public class JSExecutor {
     }
 
      /** Возвращает true при загрузке страницы */
-    public boolean pageIsLoaded(WebDriver driver) {
+    public static boolean pageIsLoaded(WebDriver driver) {
         return js.executeScript("return document.readyState").equals("complete");
     }
 
