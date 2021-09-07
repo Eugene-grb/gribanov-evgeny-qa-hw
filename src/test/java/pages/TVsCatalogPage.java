@@ -109,5 +109,4 @@ public class TVsCatalogPage extends BasePage {
         linkProduct.openInNewWindow();
         logger.info("Нажата ссылка первого продукта в списке");
     }
-
 }

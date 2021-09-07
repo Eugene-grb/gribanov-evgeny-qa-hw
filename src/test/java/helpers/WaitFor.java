@@ -27,10 +27,10 @@ public class WaitFor {
         wait.until(ExpectedConditions.presenceOfElementLocated(webElement));
     }
 
-    public static void presenceOfElementLocatedRight(By mainWebElement, By rightWebElement) {
-        wait.until(ExpectedConditions.presenceOfElementLocated(RelativeLocator
-                .with(rightWebElement)
-                .toRightOf(mainWebElement)));
+    public static WebElement searchRightElementForCompair(By mainXpath, By rightXpath) {
+        return wait.until(ExpectedConditions.presenceOfElementLocated(RelativeLocator
+                .with(rightXpath)
+                .toRightOf(mainXpath)));
     }
 
     /** Ожидание появления текста в элементе */

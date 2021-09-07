@@ -19,10 +19,10 @@ public class Screenshots {
     protected static WebDriver driver;
 
     /**
-     //     * Функция делает скриншот страницы с заданным именем и названием директории
-     //     * Если директория отсутствует, то создает ее
-     //     * @param nameFile имя файла
-     //     * @param directory название директории в корне проекта по умолчанию
+     // * Функция делает скриншот страницы с заданным именем и названием директории
+     // * Если директория отсутствует, то создает ее
+     // * @param nameFile имя файла
+     // * @param directory название директории в корне проекта по умолчанию
      */
 
     public void takeScreenshot(String nameFile, String directory) throws IOException {
