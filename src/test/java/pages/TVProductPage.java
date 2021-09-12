@@ -8,20 +8,14 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import static java.lang.String.format;
-
 
 public class TVProductPage extends BasePage {
 
-    private final Logger logger = LogManager.getLogger(TVProductPage.class);
-
+    private static String TABLE_COLUMN_MAIN = "//table[contains(@class, 'table-params')]/descendant::*[contains(text(),'%s')]";
+    private static final String COLUMN_PATTERN = "/ancestor::tr/td[2]/div";
     private static final String CHARACTERISTIC_CARD_LINK = "//a[@data-tab-name='characteristics']";
-    private static final String TABLE_COLUMN_MAIN = "//table[@class='table-params table-no-bordered']/descendant::*[contains(text(),'%s')]";
-    private static final String RIGHT_COLUMN_COMPANY = "//table[@class='table-params table-no-bordered']/descendant::*[@id='pcv-zz9CQ-']";
-    private static final String RIGHT_COLUMN_DIAGONAL = "//table[@class='table-params table-no-bordered']/descendant::*[@id='pcv-h6YqNv']";
-    private static final String RIGHT_COLUMN_REFRESH_RATE = "//table[@class='table-params table-no-bordered']/descendant::*[@id='pcv-fCPUCv']";
-    private static final String RIGHT_COLUMN_ILLUMINATION = "//table[@class='table-params table-no-bordered']/descendant::*[@id='p-il50e']";
 
+    private final Logger logger = LogManager.getLogger(TVProductPage.class);
 
     public TVProductPage(WebDriver driver) {
         super(driver);
@@ -39,39 +33,35 @@ public class TVProductPage extends BasePage {
         logger.info("Нажата кнопка 'Характеристики'");
     }
 
-    public String returnCompanyField() {
-        String nameField = "Модель";
-        String COMPANY_FIELD = format(TABLE_COLUMN_MAIN, nameField);
+    public String returnCompanyField(String nameField) {
+        TABLE_COLUMN_MAIN = TABLE_COLUMN_MAIN.replace("%s", nameField);
         WebElement searchedRightElement = WaitFor.searchRightElementForCompair(
-                By.xpath(COMPANY_FIELD),
-                By.xpath(RIGHT_COLUMN_COMPANY));
+                By.xpath(TABLE_COLUMN_MAIN),
+                By.xpath(TABLE_COLUMN_MAIN.concat(COLUMN_PATTERN)));
         return searchedRightElement.getText();
     }
 
-    public String returnDiagonalField() {
-        String nameField = "Диагональ экрана (дюйм)";
-        String COMPANY_FIELD = format(TABLE_COLUMN_MAIN, nameField);
+    public String returnDiagonalField(String nameField) {
+        TABLE_COLUMN_MAIN = TABLE_COLUMN_MAIN.replace("%s", nameField);
         WebElement searchedRightElement = WaitFor.searchRightElementForCompair(
-                By.xpath(COMPANY_FIELD),
-                By.xpath(RIGHT_COLUMN_DIAGONAL));
+                By.xpath(TABLE_COLUMN_MAIN),
+                By.xpath(TABLE_COLUMN_MAIN.concat(COLUMN_PATTERN)));
         return searchedRightElement.getText();
     }
 
-    public String returnRefreshField() {
-        String nameField = "Частота обновления экрана (Гц)";
-        String COMPANY_FIELD = format(TABLE_COLUMN_MAIN, nameField);
+    public String returnRefreshField(String nameField) {
+        TABLE_COLUMN_MAIN = TABLE_COLUMN_MAIN.replace("%s", nameField);
         WebElement searchedRightElement = WaitFor.searchRightElementForCompair(
-                By.xpath(COMPANY_FIELD),
-                By.xpath(RIGHT_COLUMN_REFRESH_RATE));
+                By.xpath(TABLE_COLUMN_MAIN),
+                By.xpath(TABLE_COLUMN_MAIN.concat(COLUMN_PATTERN)));
         return searchedRightElement.getText();
     }
 
-    public String returnIlluminationField() {
-        String nameField = "Тип подсветки";
-        String COMPANY_FIELD = format(TABLE_COLUMN_MAIN, nameField);
+    public String returnIlluminationField(String nameField) {
+        TABLE_COLUMN_MAIN = TABLE_COLUMN_MAIN.replace("%s", nameField);
         WebElement searchedRightElement = WaitFor.searchRightElementForCompair(
-                By.xpath(COMPANY_FIELD),
-                By.xpath(RIGHT_COLUMN_ILLUMINATION));
+                By.xpath(TABLE_COLUMN_MAIN),
+                By.xpath(TABLE_COLUMN_MAIN.concat(COLUMN_PATTERN)));
         return searchedRightElement.getText();
     }
 }

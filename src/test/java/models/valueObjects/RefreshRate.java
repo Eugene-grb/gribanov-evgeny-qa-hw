@@ -14,11 +14,11 @@ public class RefreshRate {
         }
     }
 
-    public int getRefreshRate() {
-        return this.refreshRate;
+    public String getRefreshRate() {
+        return String.valueOf(this.refreshRate);
     }
 
-    public boolean equals(RefreshRate otherRefreshRate) {
-        return this.refreshRate == otherRefreshRate.getRefreshRate();
+    public boolean equals(RefreshRate otherFrequency) {
+        return this.refreshRate == otherFrequency.refreshRate;
     }
 }

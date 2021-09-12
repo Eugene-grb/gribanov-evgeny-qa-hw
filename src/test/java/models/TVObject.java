@@ -1,48 +1,52 @@
 package models;
 
-import models.valueObjects.Company;
-import models.valueObjects.Diagonal;
-import models.valueObjects.Illumination;
-import models.valueObjects.RefreshRate;
+import models.valueObjects.*;
 
 public class TVObject {
 
-    private Company company;
-    private Diagonal diagonal;
-    private Illumination illumination;
-    private RefreshRate refreshRate;
+  private Company company;
+  private MaxDiagonal maxDiagonal;
+  private MinDiagonal minDiagonal;
+  private Illumination illumination;
+  private RefreshRate refreshRate;
 
-    public TVObject() {}
+  public Company getCompany() {
+    return company;
+  }
 
-    public Company getCompany() {
-        return company;
-    }
+  public void setCompany(Company company) {
+    this.company = company;
+  }
 
-    public void setCompany(Company company) {
-        this.company = company;
-    }
+  public MaxDiagonal getMaxDiagonal() {
+    return maxDiagonal;
+  }
 
-    public Diagonal getDiagonal() {
-        return diagonal;
-    }
+  public void setMaxDiagonal(MaxDiagonal maxDiagonal) {
+    this.maxDiagonal = maxDiagonal;
+  }
 
-    public void setDiagonal(Diagonal diagonal) {
-        this.diagonal = diagonal;
-    }
+  public MinDiagonal getMinDiagonal() {
+    return minDiagonal;
+  }
 
-    public Illumination getIllumination() {
-        return illumination;
-    }
+  public void setMinDiagonal(MinDiagonal minDiagonal) {
+    this.minDiagonal = minDiagonal;
+  }
 
-    public void setIllumination(Illumination illumination) {
-        this.illumination = illumination;
-    }
+  public Illumination getIllumination() {
+    return illumination;
+  }
 
-    public RefreshRate getRefreshRate() {
-        return refreshRate;
-    }
+  public void setIllumination(Illumination illumination) {
+    this.illumination = illumination;
+  }
 
-    public void setRefreshRate(RefreshRate refreshRate) {
-        this.refreshRate = refreshRate;
-    }
+  public RefreshRate getRefreshRate() {
+    return refreshRate;
+  }
+
+  public void setRefreshRate(RefreshRate refreshRate) {
+    this.refreshRate = refreshRate;
+  }
 }

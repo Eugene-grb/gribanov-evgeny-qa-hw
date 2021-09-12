@@ -12,10 +12,10 @@ public class WebDriverFactory {
         switch (name) {
             case CHROME:
                 logger.info("Драйвер для браузера Google Chrome");
-                ChromeBrowser.getDriver(pageLoadStrategy);
+                return ChromeBrowser.getDriver(pageLoadStrategy);
             case FIREFOX:
                 logger.info("Драйвер для браузера Mozilla Firefox");
-                FirefoxBrowser.getDriver(pageLoadStrategy);
+                return FirefoxBrowser.getDriver(pageLoadStrategy);
             default:
                 throw new RuntimeException("Некорректное имя браузера");
         }
