@@ -1,6 +1,8 @@
 package models.valueObjects;
 
-public class Illumination {
+import java.io.Serializable;
+
+public class Illumination implements Serializable {
 
     private String illuminationType;
 

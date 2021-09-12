@@ -1,6 +1,8 @@
 package models.valueObjects;
 
-public class MaxDiagonal {
+import java.io.Serializable;
+
+public class MaxDiagonal implements Serializable {
 
     private int diagonal;
 

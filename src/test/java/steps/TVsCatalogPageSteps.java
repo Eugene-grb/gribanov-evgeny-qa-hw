@@ -8,9 +8,9 @@ import pages.TVsCatalogPage;
 
 public class TVsCatalogPageSteps {
 
-    private static Logger logger = LogManager.getLogger(TVsCatalogPageSteps.class);
+    private static final Logger logger = LogManager.getLogger(TVsCatalogPageSteps.class);
 
-    private TVsCatalogPage tVsCatalogPage;
+    private final TVsCatalogPage tVsCatalogPage;
 
     public TVsCatalogPageSteps(TVsCatalogPage tVsCatalogPage) {
         this.tVsCatalogPage = tVsCatalogPage;
@@ -23,11 +23,11 @@ public class TVsCatalogPageSteps {
     }
 
     public void filterByCompany(Company company) {
-        JSExecutor.scrollBy(0,300);
+        JSExecutor.scrollBy(0,1200);
         tVsCatalogPage.setCompanyCheckbox(company.getCompany());
     }
 
-    public void filterByDiagonal(String accordionName,MinDiagonal minDiagonal, MinDiagonal maxDiagonal) {
+    public void filterByDiagonal(String accordionName,MinDiagonal minDiagonal, MaxDiagonal maxDiagonal) {
         JSExecutor.scrollBy(0, 300);
         tVsCatalogPage.openDiagonalAccordion(accordionName);
         tVsCatalogPage.setValueInDiagonalTextFieldInitial(minDiagonal.getDiagonal());
@@ -35,7 +35,7 @@ public class TVsCatalogPageSteps {
     }
 
     public void filterByRefreshRate(String accordionName, RefreshRate refreshRate) {
-        JSExecutor.scrollBy(0, 300);
+        JSExecutor.scrollBy(0, 600);
         tVsCatalogPage.openScreenRefreshRateAccordion(accordionName);
         tVsCatalogPage.setScreenRefreshRateFilterCheckbox(refreshRate.getRefreshRate());
     }

@@ -2,7 +2,9 @@ package models;
 
 import models.valueObjects.*;
 
-public class TVObjectBuilder {
+import java.io.Serializable;
+
+public class TVObjectBuilder implements Serializable {
 
   private final Company company;
   private final MaxDiagonal maxDiagonal;

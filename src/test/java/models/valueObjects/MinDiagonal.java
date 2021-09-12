@@ -1,6 +1,8 @@
 package models.valueObjects;
 
-public class MinDiagonal {
+import java.io.Serializable;
+
+public class MinDiagonal implements Serializable {
 
     private int diagonal;
 

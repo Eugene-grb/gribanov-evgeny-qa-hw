@@ -6,9 +6,9 @@ import pages.MainPage;
 
 public class MainPageSteps {
 
-    private static Logger logger = LogManager.getLogger(MainPageSteps.class);
+    private static final Logger logger = LogManager.getLogger(MainPageSteps.class);
 
-    private MainPage mainPage;
+    private final MainPage mainPage;
 
     public MainPageSteps(MainPage mainPage) {
         this.mainPage = mainPage;

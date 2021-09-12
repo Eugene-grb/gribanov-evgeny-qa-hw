@@ -19,8 +19,9 @@ public class TVsCatalogPage extends BasePage {
     private static final String FINAL_VALUE_DIAGONAL_FIELD = "//div[@data-id='fr[p2]']/descendant-or-self::*[@placeholder='до 88']";
     private static String ACCORDION_FILTERS = "//div[@data-id='fr[p2]']//span[starts-with(text(),'%s')]";
     private static String ILLUMINATION_TYPE_FILTER = "//div[@data-id='f[rh2]']//span[starts-with(text(),'%s')]";
-    private static String MANUFACTURER_CHECKBOX = "//div[@data-id='brand']/descendant-or-self::*[@value='%s']";
+    private static String MANUFACTURER_CHECKBOX = "//span[contains(text(), \"%s\")]";
     private static String SCREEN_REFRESH_RATE_FILTER = "//div[@data-id='f[adg]']//span[starts-with(text(),'%s')]";
+
 
     private final Logger logger = LogManager.getLogger(TVsCatalogPage.class);
 

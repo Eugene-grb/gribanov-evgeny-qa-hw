@@ -1,16 +1,18 @@
 package models.valueObjects;
 
-public class RefreshRate {
+import java.io.Serializable;
 
-    private int refreshRate;
+public class RefreshRate implements Serializable {
+
+    private String refreshRate;
 
     public RefreshRate() {}
 
-    public RefreshRate(int refreshRate) {
-        if (refreshRate > 0 ) {
+    public RefreshRate(String refreshRate) {
+        if (!refreshRate.isBlank() || refreshRate.isEmpty()) {
             this.refreshRate = refreshRate;
         } else {
-            throw new IllegalArgumentException("Значение частоты обновления дисплея не может быть меньше нуля");
+            throw new IllegalArgumentException("Неверное значение частоты обновления дисплея");
         }
     }
 
@@ -19,6 +21,6 @@ public class RefreshRate {
     }
 
     public boolean equals(RefreshRate otherFrequency) {
-        return this.refreshRate == otherFrequency.refreshRate;
+        return this.refreshRate.equals(otherFrequency.getRefreshRate());
     }
 }

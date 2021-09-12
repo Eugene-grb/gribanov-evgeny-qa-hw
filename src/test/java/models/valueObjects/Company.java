@@ -1,6 +1,8 @@
 package models.valueObjects;
 
-public class Company {
+import java.io.Serializable;
+
+public class Company implements Serializable {
 
     private String company;
 
