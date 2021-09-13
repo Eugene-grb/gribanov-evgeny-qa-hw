@@ -17,10 +17,7 @@ public class TVsCatalogPage extends BasePage {
     private static final String FIRST_PRODUCT_IN_LIST_LINK = "//div[@data-id='product']/*[@class='catalog-product__name ui-link ui-link_black'][1]";
     private static final String INITIAL_VALUE_DIAGONAL_FIELD = "//div[@data-id='fr[p2]']/descendant-or-self::*[@placeholder='от 22']";
     private static final String FINAL_VALUE_DIAGONAL_FIELD = "//div[@data-id='fr[p2]']/descendant-or-self::*[@placeholder='до 88']";
-    private static String ACCORDION_FILTERS = "//div[@data-id='fr[p2]']//span[starts-with(text(),'%s')]";
-    private static String ILLUMINATION_TYPE_FILTER = "//div[@data-id='f[rh2]']//span[starts-with(text(),'%s')]";
-    private static String MANUFACTURER_CHECKBOX = "//span[contains(text(), \"%s\")]";
-    private static String SCREEN_REFRESH_RATE_FILTER = "//div[@data-id='f[adg]']//span[starts-with(text(),'%s')]";
+    private static final String SET_FILTER_VALUE = "//div[@data-role='filters-container']//span[starts-with(text(),'%s')]";
 
 
     private final Logger logger = LogManager.getLogger(TVsCatalogPage.class);
@@ -29,6 +26,7 @@ public class TVsCatalogPage extends BasePage {
         super(driver);
     }
 
+    // СОРТИРОВКА ПО ЦЕНЕ
     public void openPriceSortingButton() {
         Button sortCheapButton = new Button(driver, By.xpath(SORT_CHEAP_BUTTON));
         sortCheapButton.click();
@@ -41,16 +39,18 @@ public class TVsCatalogPage extends BasePage {
         logger.info("Установлена сортировка 'сначала дорогие'");
     }
 
+    // СОРТИРОВКА ПО ФИЛЬТРУ "КОМПАНИЯ"
     public void setCompanyCheckbox(String company) {
-        MANUFACTURER_CHECKBOX = MANUFACTURER_CHECKBOX.replace("%s", company);
-        CheckBox checkBoxCompany = new CheckBox(driver, By.xpath(MANUFACTURER_CHECKBOX));
+        String SET_COMPANY_CHECKBOX = String.format(SET_FILTER_VALUE, company);
+        CheckBox checkBoxCompany = new CheckBox(driver, By.xpath(SET_COMPANY_CHECKBOX));
         checkBoxCompany.setChecked(true);
         logger.info("Установлен фильтр 'Производитель' - " + company);
     }
 
+    // СОРТИРОВКА ПО ФИЛЬТРУ "ДИАГОНАЛЬ"
     public void openDiagonalAccordion(String accordionName) {
-        ACCORDION_FILTERS = ACCORDION_FILTERS.replace("%s", accordionName);
-        Accordion diagonalAccordion = new Accordion(driver, By.xpath(ACCORDION_FILTERS));
+        String SET_DIAGONAL = String.format(SET_FILTER_VALUE, accordionName);
+        Accordion diagonalAccordion = new Accordion(driver, By.xpath(SET_DIAGONAL));
         diagonalAccordion.show();
         logger.info("Открыто подменю фильтра - " + accordionName);
     }
@@ -69,40 +69,65 @@ public class TVsCatalogPage extends BasePage {
         logger.info("Установлено конечное значение фильтра 'Диагональ экрана' - " + finalValue);
     }
 
+    public void closeDiagonalAccordion(String accordionName) {
+        String SET_DIAGONAL = String.format(SET_FILTER_VALUE, accordionName);
+        Accordion diagonalAccordion = new Accordion(driver, By.xpath(SET_DIAGONAL));
+        diagonalAccordion.show();
+        logger.info("Закрыто подменю фильтра - " + accordionName);
+    }
+
+    // СОРТИРОВКА ПО ФИЛЬТРУ "ЧАСТОТА ОБНОВЛЕНИЯ ЭКРАНА"
     public void openScreenRefreshRateAccordion(String accordionName) {
-        ACCORDION_FILTERS = ACCORDION_FILTERS.replace("%s", accordionName);
-        Accordion screenRefreshAccordion = new Accordion(driver, By.xpath(ACCORDION_FILTERS));
-        screenRefreshAccordion.show();
+        String OPEN_REFRESH_RATE_ACCORDION = String.format(SET_FILTER_VALUE, accordionName);
+        Accordion diagonalAccordion = new Accordion(driver, By.xpath(OPEN_REFRESH_RATE_ACCORDION));
+        diagonalAccordion.show();
         logger.info("Открыто подменю фильтра - " + accordionName);
     }
 
     public void setScreenRefreshRateFilterCheckbox(String refreshValue) {
-        SCREEN_REFRESH_RATE_FILTER = SCREEN_REFRESH_RATE_FILTER.replace("%s",refreshValue);
-        CheckBox refreshRateCheckbox = new CheckBox(driver, By.xpath(SCREEN_REFRESH_RATE_FILTER));
+        String SET_REFRESH_RATE_CHECKBOX = String.format(SET_FILTER_VALUE, refreshValue);
+        CheckBox refreshRateCheckbox = new CheckBox(driver, By.xpath(SET_REFRESH_RATE_CHECKBOX));
         refreshRateCheckbox.setChecked(true);
         logger.info("Установлен фильтр 'Частота экрана (Гц)' - " + refreshValue);
     }
 
+    public void closeScreenRefreshRateAccordion(String accordionName) {
+        String CLOSE_REFRESH_RATE_ACCORDION = String.format(SET_FILTER_VALUE, accordionName);
+        Accordion diagonalAccordion = new Accordion(driver, By.xpath(CLOSE_REFRESH_RATE_ACCORDION));
+        diagonalAccordion.show();
+        logger.info("Закрыто подменю фильтра - " + accordionName);
+    }
+
+    // СОРТИРОВКА ПО ФИЛЬТРУ "ТИП ПОДСВЕТКИ"
     public void openIlluminationTypeAccordion(String accordionName) {
-        ILLUMINATION_TYPE_FILTER = ILLUMINATION_TYPE_FILTER.replace("%s", accordionName);
-        Accordion illuminationTypeAccordion = new Accordion(driver, By.xpath(ILLUMINATION_TYPE_FILTER));
+        String OPEN_ILLUMINATION_ACCORDION = String.format(SET_FILTER_VALUE, accordionName);
+        Accordion illuminationTypeAccordion = new Accordion(driver, By.xpath(OPEN_ILLUMINATION_ACCORDION));
         illuminationTypeAccordion.show();
         logger.info("Открыто подменю фильтра - " + accordionName);
     }
 
     public void setIlluminationTypeFilterCheckbox(String illuminationType) {
-        ILLUMINATION_TYPE_FILTER = ILLUMINATION_TYPE_FILTER.replace("%s", illuminationType);
-        CheckBox illuminationTypeCheckbox = new CheckBox(driver, By.xpath(ILLUMINATION_TYPE_FILTER));
+        String SET_ILLUMINATION_CHECKBOX = String.format(SET_FILTER_VALUE, illuminationType);
+        CheckBox illuminationTypeCheckbox = new CheckBox(driver, By.xpath(SET_ILLUMINATION_CHECKBOX));
         illuminationTypeCheckbox.setChecked(true);
         logger.info("Установлен фильтр 'Тип подсветки экрана' - " + illuminationType);
     }
 
+    public void closeIlluminationTypeAccordion(String accordionName) {
+        String CLOSE_ILLUMINATION_ACCORDION = String.format(SET_FILTER_VALUE, accordionName);
+        Accordion illuminationTypeAccordion = new Accordion(driver, By.xpath(CLOSE_ILLUMINATION_ACCORDION));
+        illuminationTypeAccordion.show();
+        logger.info("Закрыто подменю фильтра - " + accordionName);
+    }
+
+    // ПРИМЕНИТЬ ВСЕ ФИЛЬТРЫ
     public void applyFiltersButtonClick() {
         Button buttonApply = new Button(driver, By.xpath(APPLY_FILTERS_BUTTON));
         buttonApply.click();
         logger.info("Нажата кнопка \"Применить\"");
     }
 
+    // ОТКРЫТЬ ПЕРВЫЙ ПРОДУКТ В СПИСКЕ
     public void firstProductLinkClick(String product) {
         WaitFor.firstProductMustBe(By.xpath(FIRST_PRODUCT_IN_LIST_LINK), product);
         Link linkProduct = new Link(driver, By.xpath(FIRST_PRODUCT_IN_LIST_LINK));

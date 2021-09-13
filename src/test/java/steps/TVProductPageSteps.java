@@ -16,8 +16,8 @@ public class TVProductPageSteps {
         logger.info("Открыта страница [Телевизоры / Продукт]");
     }
 
-    public void getTitle() {
-        tvProductPage.getPageTitle();
+    public String getTitle() {
+        return tvProductPage.getPageTitle();
     }
 
     public void specsLinkClick() {
