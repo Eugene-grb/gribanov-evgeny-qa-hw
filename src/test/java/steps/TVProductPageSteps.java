@@ -26,18 +26,18 @@ public class TVProductPageSteps {
     }
 
     public String getCompanyValue(String companyColumnName) {
-        return tvProductPage.returnCompanyField(companyColumnName);
+        return tvProductPage.returnRightField(companyColumnName);
     }
 
     public String getDiagonalValue(String diagonalColumnName) {
-        return tvProductPage.returnDiagonalField(diagonalColumnName);
+        return tvProductPage.returnRightField(diagonalColumnName);
     }
 
     public String getRefreshRateValue(String refreshRateColumnName) {
-        return tvProductPage.returnRefreshField(refreshRateColumnName);
+        return tvProductPage.returnRightField(refreshRateColumnName);
     }
 
     public String getIlluminationValue(String illuminationColumnName) {
-        return tvProductPage.returnIlluminationField(illuminationColumnName);
+        return tvProductPage.returnRightField(illuminationColumnName);
     }
 }

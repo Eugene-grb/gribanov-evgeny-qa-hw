@@ -29,6 +29,11 @@
             <version>30.1.1-jre</version>
         </dependency>
         <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.20.2</version>
+        </dependency>
+        <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
             <version>5.1.0</version>
@@ -71,7 +76,6 @@
             <artifactId>ashot</artifactId>
             <version>1.5.4</version>
         </dependency>
-
     </dependencies>
 
 

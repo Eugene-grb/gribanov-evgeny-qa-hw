@@ -13,14 +13,15 @@ import steps.TVProductPageSteps;
 import steps.TVsCatalogPageSteps;
 import tests.assertions.SamsungTVsPageAssertions;
 
-import java.time.Duration;
+
+
 
 public class SamsungTV_Test extends BaseTest {
 
     String EXPECTED_COMPANY = "Samsung";
     String EXPECTED_ILLUMINATION_TYPE = "Direct LED";
-    int EXPECTED_MAX_DIAGONAL = 80;
-    int EXPECTED_MIN_DIAGONAL = 60;
+    String EXPECTED_MAX_DIAGONAL = "80";
+    String EXPECTED_MIN_DIAGONAL = "60";
     String EXPECTED_REFRESH_RATE = "120 Гц";
     String EXPECTED_PRODUCT = "Телевизор LED Samsung QE75Q950TSUXRU серый";
     String EXPECTED_PAGE_TITLE =
@@ -28,8 +29,9 @@ public class SamsungTV_Test extends BaseTest {
                     "Характеристики, цена Samsung QE75Q950TSUXRU | 8165296";
 
 
+
     @Test
-    public void productIsSamsungTV() {
+    public void checkPageTitle() {
         // 1. Arrange
         TVObjectBuilder builder = new TVObjectBuilder(
                 new Company(this.EXPECTED_COMPANY),
@@ -41,26 +43,35 @@ public class SamsungTV_Test extends BaseTest {
 
         // 2. Act
         TVProductPageSteps newTvProductPage = getProductPage(tvObject);
+        SamsungTVsPageAssertions pageAssert = new SamsungTVsPageAssertions(newTvProductPage);
 
         // 3. Assert
-        SamsungTVsPageAssertions pageTitleAssert = new SamsungTVsPageAssertions(newTvProductPage);
-        pageTitleAssert.pageTitleEquals(EXPECTED_PAGE_TITLE);
-        pageTitleAssert.modelNameEquals(EXPECTED_COMPANY);
+        pageAssert.pageTitleEquals(EXPECTED_PAGE_TITLE);
 
     }
 
+    @Test
+    public void checkProductSpecs() {
+        // 1. Arrange
+        TVObjectBuilder builder = new TVObjectBuilder(
+                new Company(this.EXPECTED_COMPANY),
+                new MaxDiagonal(this.EXPECTED_MAX_DIAGONAL),
+                new Illumination(this.EXPECTED_ILLUMINATION_TYPE),
+                new RefreshRate(this.EXPECTED_REFRESH_RATE),
+                new MinDiagonal(this.EXPECTED_MIN_DIAGONAL)
+        ); TVObject tvObject = builder.build();
 
-//    @Test
-//    public void checkProductSpecs() {
-//        // 1. Arrange
-//        String COMPANY = this.EXPECTED_COMPANY;
-//
-//        // 2. Act
-//        SamsungTVsPageAssertions pageTitleAssert = new SamsungTVsPageAssertions(newTvProductPage);
-//
-//        // 3. Assert
-//
-//    }
+        // 2. Act
+        TVProductPageSteps tvProductPageSteps = getProductPage(tvObject);
+        SamsungTVsPageAssertions pageAssert = new SamsungTVsPageAssertions(tvProductPageSteps);
+
+        // 3. Assert
+        pageAssert.modelNameEquals(EXPECTED_COMPANY);
+        pageAssert.illuminationTypeEquals(EXPECTED_ILLUMINATION_TYPE);
+        pageAssert.diagonalEquals(EXPECTED_MAX_DIAGONAL, EXPECTED_MIN_DIAGONAL);
+        pageAssert.refreshRateEquals(EXPECTED_REFRESH_RATE);
+
+    }
 
 
     public TVProductPageSteps getProductPage(TVObject tvObject) {

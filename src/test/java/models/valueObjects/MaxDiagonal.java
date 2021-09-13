@@ -4,15 +4,15 @@ import java.io.Serializable;
 
 public class MaxDiagonal implements Serializable {
 
-    private int diagonal;
+    private String diagonal;
 
     public MaxDiagonal() {}
 
-    public MaxDiagonal(int inches) {
-        if (inches >= 22 && inches <= 100 ) {
-            diagonal = inches;
+    public MaxDiagonal(String diagonal) {
+        if (!diagonal.isBlank() || diagonal.isEmpty()) {
+            this.diagonal = diagonal;
         } else {
-            throw new IllegalArgumentException("Значение диагонали выходит за диапазон [22-88]");
+            throw new IllegalArgumentException("Неверное значение диагонали");
         }
     }
 
@@ -20,7 +20,7 @@ public class MaxDiagonal implements Serializable {
         return String.valueOf(this.diagonal);
     }
 
-    public boolean equals(MaxDiagonal otherMaxDiagonal) {
-        return this.diagonal == otherMaxDiagonal.diagonal;
+    public boolean equals(MaxDiagonal otherDiagonal) {
+        return this.diagonal.equals(otherDiagonal.getDiagonal());
     }
 }

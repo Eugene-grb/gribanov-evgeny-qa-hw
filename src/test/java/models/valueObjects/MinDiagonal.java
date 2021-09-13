@@ -4,15 +4,15 @@ import java.io.Serializable;
 
 public class MinDiagonal implements Serializable {
 
-    private int diagonal;
+    private String diagonal;
 
     public MinDiagonal() {}
 
-    public MinDiagonal(int inches) {
-        if (inches >= 22 && inches <= 100 ) {
-            diagonal = inches;
+    public MinDiagonal(String diagonal) {
+        if (!diagonal.isBlank() || diagonal.isEmpty()) {
+            this.diagonal = diagonal;
         } else {
-            throw new IllegalArgumentException("Значение диагонали выходит за диапазон [22-88]");
+            throw new IllegalArgumentException("Неверное значение диагонали");
         }
     }
 
@@ -20,7 +20,7 @@ public class MinDiagonal implements Serializable {
         return String.valueOf(this.diagonal);
     }
 
-    public boolean equals(MinDiagonal otherMinDiagonal) {
-        return this.diagonal == otherMinDiagonal.diagonal;
+    public boolean equals(MinDiagonal otherDiagonal) {
+        return this.diagonal.equals(otherDiagonal.getDiagonal());
     }
 }

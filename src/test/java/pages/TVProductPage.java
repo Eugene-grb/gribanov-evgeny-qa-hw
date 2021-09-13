@@ -33,35 +33,11 @@ public class TVProductPage extends BasePage {
         logger.info("Нажата кнопка 'Характеристики'");
     }
 
-    public String returnCompanyField(String nameField) {
-        TABLE_COLUMN_MAIN = TABLE_COLUMN_MAIN.replace("%s", nameField);
+    public String returnRightField(String nameField) {
+        String TABLE_COLUMN = String.format(TABLE_COLUMN_MAIN, nameField);
         WebElement searchedRightElement = WaitFor.searchRightElementForCompair(
-                By.xpath(TABLE_COLUMN_MAIN),
-                By.xpath(TABLE_COLUMN_MAIN.concat(COLUMN_PATTERN)));
-        return searchedRightElement.getText();
-    }
-
-    public String returnDiagonalField(String nameField) {
-        TABLE_COLUMN_MAIN = TABLE_COLUMN_MAIN.replace("%s", nameField);
-        WebElement searchedRightElement = WaitFor.searchRightElementForCompair(
-                By.xpath(TABLE_COLUMN_MAIN),
-                By.xpath(TABLE_COLUMN_MAIN.concat(COLUMN_PATTERN)));
-        return searchedRightElement.getText();
-    }
-
-    public String returnRefreshField(String nameField) {
-        TABLE_COLUMN_MAIN = TABLE_COLUMN_MAIN.replace("%s", nameField);
-        WebElement searchedRightElement = WaitFor.searchRightElementForCompair(
-                By.xpath(TABLE_COLUMN_MAIN),
-                By.xpath(TABLE_COLUMN_MAIN.concat(COLUMN_PATTERN)));
-        return searchedRightElement.getText();
-    }
-
-    public String returnIlluminationField(String nameField) {
-        TABLE_COLUMN_MAIN = TABLE_COLUMN_MAIN.replace("%s", nameField);
-        WebElement searchedRightElement = WaitFor.searchRightElementForCompair(
-                By.xpath(TABLE_COLUMN_MAIN),
-                By.xpath(TABLE_COLUMN_MAIN.concat(COLUMN_PATTERN)));
+                By.xpath(TABLE_COLUMN),
+                By.xpath(TABLE_COLUMN.concat(COLUMN_PATTERN)));
         return searchedRightElement.getText();
     }
 }
