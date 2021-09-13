@@ -18,7 +18,14 @@ public class SamsungTVsPageAssertions {
                 .contains(actual);
     }
 
-    public void modelNameEquals(String expected) {
-
+    public void modelNameEquals(String expectedCompany) {
+        String actualCompany = tvProductPageSteps.getCompanyValue("Модель");
+        assertWithMessage("Модель не соответствует ожидаемой!")
+                .that(expectedCompany)
+                .contains(expectedCompany.strip());
     }
 }
+
+//    String actualIlluminationType = tvProductPageSteps.getIlluminationValue("Тип подсветки экрана");
+//    String actualDiagonal = tvProductPageSteps.getDiagonalValue("Диагональ экрана (дюйм)");
+//    String actualRefreshRate = tvProductPageSteps.getRefreshRateValue("Частота обновления экрана");

@@ -45,45 +45,23 @@ public class SamsungTV_Test extends BaseTest {
         // 3. Assert
         SamsungTVsPageAssertions pageTitleAssert = new SamsungTVsPageAssertions(newTvProductPage);
         pageTitleAssert.pageTitleEquals(EXPECTED_PAGE_TITLE);
+        pageTitleAssert.modelNameEquals(EXPECTED_COMPANY);
 
     }
 
 
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    @Test
-    public void checkProductSpecs() {
-        // 1. Arrange
-        TVObjectBuilder builder = new TVObjectBuilder(
-                new Company(this.EXPECTED_COMPANY),
-                new MaxDiagonal(this.EXPECTED_MAX_DIAGONAL),
-                new Illumination(this.EXPECTED_ILLUMINATION_TYPE),
-                new RefreshRate(this.EXPECTED_REFRESH_RATE),
-                new MinDiagonal(this.EXPECTED_MIN_DIAGONAL)
-        ); TVObject tvObject = builder.build();
+//    @Test
+//    public void checkProductSpecs() {
+//        // 1. Arrange
+//        String COMPANY = this.EXPECTED_COMPANY;
+//
+//        // 2. Act
+//        SamsungTVsPageAssertions pageTitleAssert = new SamsungTVsPageAssertions(newTvProductPage);
+//
+//        // 3. Assert
+//
+//    }
 
-        // 2. Act
-        TVProductPageSteps newTvProductPage = getProductSpecs(tvObject);
-
-        // 3. Assert
-        SamsungTVsPageAssertions pageTitleAssert = new SamsungTVsPageAssertions(newTvProductPage);
-        pageTitleAssert.pageTitleEquals(EXPECTED_PAGE_TITLE);
-    }
-
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    public TVProductPageSteps getProductSpecs(TVObject tvObject) {
-
-        TVProductPageSteps tvProductPageSteps = new TVProductPageSteps(new TVProductPage(driver));
-
-        tvProductPageSteps.specsLinkClick();
-
-        String actualCompany = tvProductPageSteps.getCompanyValue("Модель");
-        String actualIlluminationType = tvProductPageSteps.getIlluminationValue("Тип подсветки экрана");
-        String actualDiagonal = tvProductPageSteps.getDiagonalValue("Диагональ экрана (дюйм)");
-        String actualRefreshRate = tvProductPageSteps.getRefreshRateValue("Частота обновления экрана");
-
-
-        return new TVProductPageSteps(new TVProductPage(driver));
-    }
 
     public TVProductPageSteps getProductPage(TVObject tvObject) {
         // Открыть страницу DNS
@@ -129,6 +107,10 @@ public class SamsungTV_Test extends BaseTest {
 
         // -- Нажать на ссылку первого товара в каталоге
         tVsCatalogPageSteps.firstProductLinkClick(EXPECTED_PRODUCT);
+
+        TVProductPageSteps tvProductPageSteps = new TVProductPageSteps(new TVProductPage(driver));
+
+        tvProductPageSteps.specsLinkClick();
 
         return new TVProductPageSteps(new TVProductPage(driver));
     }
