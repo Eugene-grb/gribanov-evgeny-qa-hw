@@ -11,7 +11,7 @@ import org.openqa.selenium.WebElement;
 
 public class TVProductPage extends BasePage {
 
-    private static String TABLE_COLUMN_MAIN = "//table[contains(@class, 'table-params')]/descendant::*[contains(text(),'%s')]";
+    private static final String TABLE_COLUMN_MAIN = "//table[contains(@class, 'table-params')]/descendant::*[contains(text(),'%s')]";
     private static final String COLUMN_PATTERN = "/ancestor::tr/td[2]/div";
     private static final String CHARACTERISTIC_CARD_LINK = "//a[@data-tab-name='characteristics']";
 

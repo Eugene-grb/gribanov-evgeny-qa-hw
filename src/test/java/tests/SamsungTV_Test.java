@@ -14,8 +14,6 @@ import steps.TVsCatalogPageSteps;
 import tests.assertions.SamsungTVsPageAssertions;
 
 
-
-
 public class SamsungTV_Test extends BaseTest {
 
     String EXPECTED_COMPANY = "Samsung";
@@ -28,18 +26,19 @@ public class SamsungTV_Test extends BaseTest {
             "Купить 75\" (189 см) Телевизор LED Samsung QE75Q950TSUXRU серый в интернет магазине DNS. " +
                     "Характеристики, цена Samsung QE75Q950TSUXRU | 8165296";
 
-
+    // Создать объект
+    TVObjectBuilder builder = new TVObjectBuilder(
+            new Company(this.EXPECTED_COMPANY),
+            new MaxDiagonal(this.EXPECTED_MAX_DIAGONAL),
+            new Illumination(this.EXPECTED_ILLUMINATION_TYPE),
+            new RefreshRate(this.EXPECTED_REFRESH_RATE),
+            new MinDiagonal(this.EXPECTED_MIN_DIAGONAL)
+    );
 
     @Test
     public void checkPageTitle() {
         // 1. Arrange
-        TVObjectBuilder builder = new TVObjectBuilder(
-                new Company(this.EXPECTED_COMPANY),
-                new MaxDiagonal(this.EXPECTED_MAX_DIAGONAL),
-                new Illumination(this.EXPECTED_ILLUMINATION_TYPE),
-                new RefreshRate(this.EXPECTED_REFRESH_RATE),
-                new MinDiagonal(this.EXPECTED_MIN_DIAGONAL)
-        ); TVObject tvObject = builder.build();
+        TVObject tvObject = builder.build();
 
         // 2. Act
         TVProductPageSteps newTvProductPage = getProductPage(tvObject);
@@ -47,19 +46,12 @@ public class SamsungTV_Test extends BaseTest {
 
         // 3. Assert
         pageAssert.pageTitleEquals(EXPECTED_PAGE_TITLE);
-
     }
 
     @Test
     public void checkProductSpecs() {
         // 1. Arrange
-        TVObjectBuilder builder = new TVObjectBuilder(
-                new Company(this.EXPECTED_COMPANY),
-                new MaxDiagonal(this.EXPECTED_MAX_DIAGONAL),
-                new Illumination(this.EXPECTED_ILLUMINATION_TYPE),
-                new RefreshRate(this.EXPECTED_REFRESH_RATE),
-                new MinDiagonal(this.EXPECTED_MIN_DIAGONAL)
-        ); TVObject tvObject = builder.build();
+        TVObject tvObject = builder.build();
 
         // 2. Act
         TVProductPageSteps tvProductPageSteps = getProductPage(tvObject);
@@ -70,7 +62,6 @@ public class SamsungTV_Test extends BaseTest {
         pageAssert.illuminationTypeEquals(EXPECTED_ILLUMINATION_TYPE);
         pageAssert.diagonalEquals(EXPECTED_MAX_DIAGONAL, EXPECTED_MIN_DIAGONAL);
         pageAssert.refreshRateEquals(EXPECTED_REFRESH_RATE);
-
     }
 
 

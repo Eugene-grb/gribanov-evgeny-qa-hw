@@ -21,8 +21,8 @@ public class TVProductPageSteps {
     }
 
     public void specsLinkClick() {
-        JSExecutor.scrollBy(0, 300);
         tvProductPage.pressCharacteristicButton();
+        JSExecutor.scrollBy(0, 300);
     }
 
     public String getCompanyValue(String companyColumnName) {
