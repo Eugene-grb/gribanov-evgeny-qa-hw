@@ -14,7 +14,6 @@ import steps.TVsCatalogPageSteps;
 import tests.assertions.SamsungTVsPageAssertions;
 
 
-
 public class SamsungTV_Test extends BaseTest {
 
     String EXPECTED_COMPANY = "Samsung";
@@ -113,8 +112,10 @@ public class SamsungTV_Test extends BaseTest {
         // -- Нажать на ссылку первого товара в каталоге
         tVsCatalogPageSteps.firstProductLinkClick(EXPECTED_PRODUCT);
 
+        // Страница "Продукт"
         TVProductPageSteps tvProductPageSteps = new TVProductPageSteps(new TVProductPage(driver));
 
+        // -- Нажать на характеристики
         tvProductPageSteps.specsLinkClick();
 
         return new TVProductPageSteps(new TVProductPage(driver));
