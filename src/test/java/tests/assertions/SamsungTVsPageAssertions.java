@@ -1,7 +1,5 @@
 package tests.assertions;
 
-
-import org.junit.jupiter.api.Assertions;
 import steps.TVProductPageSteps;
 import static com.google.common.truth.Truth.assertWithMessage;
 
@@ -18,5 +16,9 @@ public class SamsungTVsPageAssertions {
         assertWithMessage("Заголовок не соответствует ожидаемому!")
                 .that(expected)
                 .contains(actual);
+    }
+
+    public void modelNameEquals(String expected) {
+
     }
 }
