@@ -14,6 +14,7 @@ import steps.TVsCatalogPageSteps;
 import tests.assertions.SamsungTVsPageAssertions;
 
 
+
 public class SamsungTV_Test extends BaseTest {
 
     String EXPECTED_COMPANY = "Samsung";
@@ -35,6 +36,7 @@ public class SamsungTV_Test extends BaseTest {
             new MinDiagonal(this.EXPECTED_MIN_DIAGONAL)
     );
 
+
     @Test
     public void checkPageTitle() {
         // 1. Arrange
@@ -47,6 +49,7 @@ public class SamsungTV_Test extends BaseTest {
         // 3. Assert
         pageAssert.pageTitleEquals(EXPECTED_PAGE_TITLE);
     }
+
 
     @Test
     public void checkProductSpecs() {

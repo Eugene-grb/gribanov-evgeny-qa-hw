@@ -24,7 +24,7 @@ public class BaseTest {
                 BrowserName.fromString(env),
                 PageLoadStrategy.fromString(loadPageOption));
         logger.info("Драйвер стартовал!");
-        logger.info("env = " + env + " page load strategy: " + loadPageOption);
+        logger.info(" -env = " + env + "\n -page load strategy: " + loadPageOption);
     }
 
     @AfterEach
