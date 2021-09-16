@@ -1,4 +1,4 @@
-package tests;
+package tests.cases;
 
 import helpers.Screenshots;
 import models.TVObject;
@@ -11,6 +11,7 @@ import pages.TVsCatalogPage;
 import steps.MainPageSteps;
 import steps.TVProductPageSteps;
 import steps.TVsCatalogPageSteps;
+import tests.BaseTest;
 import tests.assertions.SamsungTVsPageAssertions;
 
 
@@ -42,8 +43,9 @@ public class SamsungTV_Test extends BaseTest {
         TVObject tvObject = builder.build();
 
         // 2. Act
-        TVProductPageSteps newTvProductPage = getProductPage(tvObject);
+        TVProductPageSteps newTvProductPage = openPageTest(tvObject);
         SamsungTVsPageAssertions pageAssert = new SamsungTVsPageAssertions(newTvProductPage);
+        Screenshots.takeScreenshot("ProductPage_Product", "temp", driver);
 
         // 3. Assert
         pageAssert.pageTitleEquals(EXPECTED_PAGE_TITLE);
@@ -56,7 +58,10 @@ public class SamsungTV_Test extends BaseTest {
         TVObject tvObject = builder.build();
 
         // 2. Act
-        TVProductPageSteps tvProductPageSteps = getProductPage(tvObject);
+        TVProductPageSteps tvProductPageSteps = openPageTest(tvObject);
+        tvProductPageSteps.specsLinkClick();
+        Screenshots.takeScreenshot("ProductPage_Characteristics", "temp", driver);
+
         SamsungTVsPageAssertions pageAssert = new SamsungTVsPageAssertions(tvProductPageSteps);
 
         // 3. Assert
@@ -66,8 +71,8 @@ public class SamsungTV_Test extends BaseTest {
         pageAssert.refreshRateEquals(EXPECTED_REFRESH_RATE);
     }
 
+    public TVProductPageSteps openPageTest(TVObject tvObject) {
 
-    public TVProductPageSteps getProductPage(TVObject tvObject) {
         // Открыть страницу DNS
         driver.get("https://www.dns-shop.ru/");
 
@@ -115,10 +120,6 @@ public class SamsungTV_Test extends BaseTest {
         // Страница "Продукт"
         TVProductPageSteps tvProductPageSteps = new TVProductPageSteps(new TVProductPage(driver));
 
-        // -- Нажать на характеристики
-        tvProductPageSteps.specsLinkClick();
-
         return new TVProductPageSteps(new TVProductPage(driver));
     }
-
 }
