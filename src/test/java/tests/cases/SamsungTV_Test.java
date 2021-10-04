@@ -1,13 +1,13 @@
 package tests.cases;
 
-import helpers.Screenshots;
+import web.helpers.ScreenshotHelper;
 import models.TVObject;
 import models.TVObjectBuilder;
-import models.valueObjects.*;
+import models.valueobjects.*;
 import org.junit.jupiter.api.Test;
-import pages.MainPage;
-import pages.TVProductPage;
-import pages.TVsCatalogPage;
+import web.pages.old.MainPage;
+import web.pages.old.TVProductPage;
+import web.pages.old.TVsCatalogPage;
 import steps.MainPageSteps;
 import steps.TVProductPageSteps;
 import steps.TVsCatalogPageSteps;
@@ -45,7 +45,7 @@ public class SamsungTV_Test extends BaseTest {
         // 2. Act
         TVProductPageSteps newTvProductPage = openPageTest(tvObject);
         SamsungTVsPageAssertions pageAssert = new SamsungTVsPageAssertions(newTvProductPage);
-        Screenshots.takeScreenshot("ProductPage_Product", "temp", driver);
+        ScreenshotHelper.takeScreenshot("ProductPage_Product", "temp", driver);
 
         // 3. Assert
         pageAssert.pageTitleEquals(EXPECTED_PAGE_TITLE);
@@ -60,7 +60,7 @@ public class SamsungTV_Test extends BaseTest {
         // 2. Act
         TVProductPageSteps tvProductPageSteps = openPageTest(tvObject);
         tvProductPageSteps.specsLinkClick();
-        Screenshots.takeScreenshot("ProductPage_Characteristics", "temp", driver);
+        ScreenshotHelper.takeScreenshot("ProductPage_Characteristics", "temp", driver);
 
         SamsungTVsPageAssertions pageAssert = new SamsungTVsPageAssertions(tvProductPageSteps);
 
@@ -84,7 +84,7 @@ public class SamsungTV_Test extends BaseTest {
         // Страница "Каталог телевизоров"
         TVsCatalogPageSteps tVsCatalogPageSteps = new TVsCatalogPageSteps(new TVsCatalogPage(driver));
         // -- Сделать скриншот страницы
-        Screenshots.takeScreenshot("TvCatalog_Original", "temp", driver);
+        ScreenshotHelper.takeScreenshot("TvCatalog_Original", "temp", driver);
 
         // -- Установить сортировку "Сначала дорогие"
         tVsCatalogPageSteps.sortByExpensive();
@@ -112,7 +112,7 @@ public class SamsungTV_Test extends BaseTest {
         tVsCatalogPageSteps.applyFiltersButtonClick();
 
         // -- Сделать скриншот страницы
-        Screenshots.takeScreenshot("TvCatalog_WithFilters", "temp", driver);
+        ScreenshotHelper.takeScreenshot("TvCatalog_WithFilters", "temp", driver);
 
         // -- Нажать на ссылку первого товара в каталоге
         tVsCatalogPageSteps.firstProductLinkClick(EXPECTED_PRODUCT);

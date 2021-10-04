@@ -1,7 +1,7 @@
 package models;
 
 import lombok.Data;
-import models.valueObjects.*;
+import models.valueobjects.*;
 
 import java.io.Serializable;
 

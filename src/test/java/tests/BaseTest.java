@@ -5,9 +5,9 @@ import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
-import webdriverfactory.BrowserName;
+import web.drivers.BrowserName;
 import webdriverfactory.PageLoadStrategy;
-import webdriverfactory.WebDriverFactory;
+import web.drivers.WebDriverFactory;
 
 public class BaseTest {
 

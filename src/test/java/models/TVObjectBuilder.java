@@ -1,6 +1,6 @@
 package models;
 
-import models.valueObjects.*;
+import models.valueobjects.*;
 
 import java.io.Serializable;
 

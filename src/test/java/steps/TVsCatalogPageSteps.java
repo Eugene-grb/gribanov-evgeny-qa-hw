@@ -1,10 +1,10 @@
 package steps;
 
-import models.valueObjects.*;
-import helpers.JSExecutor;
+import models.valueobjects.*;
+import web.helpers.JavaScriptHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import pages.TVsCatalogPage;
+import web.pages.old.TVsCatalogPage;
 
 public class TVsCatalogPageSteps {
 
@@ -25,13 +25,13 @@ public class TVsCatalogPageSteps {
 
     // СОРТИРОВАТЬ ПО ПРОИЗВОДИТЕЛЮ
     public void filterByCompany(Company company) {
-        JSExecutor.scrollBy(0,1200);
+        JavaScriptHelper.scrollBy(0,1200);
         tVsCatalogPage.setCompanyCheckbox(company.getCompany());
     }
 
     // СОРТИРОВАТЬ ПО "ДИАГОНАЛИ"
     public void filterByDiagonal(String accordionName,MinDiagonal minDiagonal, MaxDiagonal maxDiagonal) {
-        JSExecutor.scrollBy(0, 300);
+        JavaScriptHelper.scrollBy(0, 300);
         tVsCatalogPage.openDiagonalAccordion(accordionName);
         tVsCatalogPage.setValueInDiagonalTextFieldInitial(minDiagonal.getDiagonal());
         tVsCatalogPage.setValueInDiagonalTextFieldFinal(maxDiagonal.getDiagonal());
@@ -40,7 +40,7 @@ public class TVsCatalogPageSteps {
 
     // СОРТИРОВАТЬ ПО "ЧАСТОТЕ ОБНОВЛЕНИЯ"
     public void filterByRefreshRate(String accordionName, RefreshRate refreshRate) {
-        JSExecutor.scrollBy(0, 300);
+        JavaScriptHelper.scrollBy(0, 300);
         tVsCatalogPage.openScreenRefreshRateAccordion(accordionName);
         tVsCatalogPage.setScreenRefreshRateFilterCheckbox(refreshRate.getRefreshRate());
         tVsCatalogPage.closeScreenRefreshRateAccordion(accordionName);
@@ -48,7 +48,7 @@ public class TVsCatalogPageSteps {
 
     // СОРТИРОВАТЬ ПО "ТИПУ ПОДСВЕТКИ"
     public void filterByIlluminationType(String accordionName, Illumination illumination) {
-        JSExecutor.scrollBy(0, 300);
+        JavaScriptHelper.scrollBy(0, 300);
         tVsCatalogPage.openIlluminationTypeAccordion(accordionName);
         tVsCatalogPage.setIlluminationTypeFilterCheckbox(illumination.getIlluminationType());
         tVsCatalogPage.closeIlluminationTypeAccordion(accordionName);
@@ -61,7 +61,7 @@ public class TVsCatalogPageSteps {
 
     // ОТРЫТЬ ПЕРВЫЙ ПРОДУКТ В СПИСКЕ
     public void firstProductLinkClick(String product) {
-        JSExecutor.scrollBy(0, -1200);
+        JavaScriptHelper.scrollBy(0, -1200);
         tVsCatalogPage.firstProductLinkClick(product);
     }
 }

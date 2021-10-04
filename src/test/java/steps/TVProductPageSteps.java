@@ -1,9 +1,9 @@
 package steps;
 
-import helpers.JSExecutor;
+import web.helpers.JavaScriptHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import pages.TVProductPage;
+import web.pages.old.TVProductPage;
 
 public class TVProductPageSteps {
 
@@ -21,9 +21,9 @@ public class TVProductPageSteps {
     }
 
     public void specsLinkClick() {
-        JSExecutor.scrollBy(0, 300);
+        JavaScriptHelper.scrollBy(0, 300);
         tvProductPage.pressCharacteristicButton();
-        JSExecutor.scrollBy(0, 600);
+        JavaScriptHelper.scrollBy(0, 600);
     }
 
     public String getCompanyValue(String companyColumnName) {

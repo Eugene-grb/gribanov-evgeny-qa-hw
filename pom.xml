@@ -10,26 +10,30 @@
 
     <properties>
         <!-- PROJECT -->
+        <java.version>11</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <!-- MAVEN -->
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
         <maven-compiler-plugin>3.8.1</maven-compiler-plugin>
         <maven-surefire-plugin>3.0.0-M5</maven-surefire-plugin>
 
         <!-- DEPENDENCIES -->
-        <lombok>1.18.20</lombok>
-        <assertj-core>3.20.2</assertj-core>
-        <junit-jupiter-engine>5.8.0</junit-jupiter-engine>
-        <selenium-java>4.0.0-beta-4</selenium-java>
-        <webdrivermanager>5.0.0</webdrivermanager>
-        <ashot>1.5.4</ashot>
-        <slf4j-simple>1.7.32</slf4j-simple>
+        <!-- selenium -->
+        <selenium-java>4.0.0-rc-2</selenium-java>
+        <webdrivermanager>5.0.2</webdrivermanager>
+        <!-- cucumber -->
+        <cucumber>6.11.0</cucumber>
+        <!-- testing -->
+        <junit-jupiter>5.8.1</junit-jupiter>
+        <assertj-core>3.21.0</assertj-core>
+        <!-- logging -->
         <slf4j-api>1.7.32</slf4j-api>
-        <log4j-api>2.14.1</log4j-api>
-        <log4j-core>2.14.1</log4j-core>
+        <logback-core>1.2.6</logback-core>
+        <logback-classic>1.2.6</logback-classic>
+        <!-- utilities -->
+        <lombok>1.18.20</lombok>
+        <ashot>1.5.4</ashot>
     </properties>
 
     <dependencies>
@@ -40,8 +44,8 @@
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>${junit-jupiter-engine}</version>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit-jupiter}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -57,9 +61,22 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>${slf4j-simple}</version>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>${cucumber}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-junit</artifactId>
+            <version>${cucumber}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-junit-platform-engine</artifactId>
+            <version>${cucumber}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -67,14 +84,14 @@
             <version>${slf4j-api}</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>${log4j-api}</version>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>${logback-core}</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>${log4j-core}</version>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback-classic}</version>
         </dependency>
         <dependency>
             <groupId>ru.yandex.qatools.ashot</groupId>
@@ -100,13 +117,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>${maven-compiler-plugin}</version>
                 <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven-compiler-plugin}</target>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-
 </project>

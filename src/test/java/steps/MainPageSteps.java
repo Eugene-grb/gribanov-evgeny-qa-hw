@@ -2,7 +2,7 @@ package steps;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import pages.MainPage;
+import web.pages.old.MainPage;
 
 public class MainPageSteps {
 
