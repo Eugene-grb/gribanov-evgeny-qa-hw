@@ -1,29 +1,24 @@
 package steps;
 
-import helpers.JSExecutor;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import pages.TVProductPage;
+import lombok.extern.log4j.Log4j2;
+import web.helpers.JavaScriptHelper;
+import web.pages.BasePage;
+import web.pages.TVProductPage;
 
+@Log4j2
 public class TVProductPageSteps {
-
-    private static final Logger logger = LogManager.getLogger(TVProductPageSteps.class);
 
     private final TVProductPage tvProductPage;
 
     public TVProductPageSteps(TVProductPage tvProductPage) {
         this.tvProductPage = tvProductPage;
-        logger.info("Открыта страница [Телевизоры / Продукт]");
-    }
-
-    public String getTitle() {
-        return tvProductPage.getPageTitle();
+        log.info("Открыта страница [Телевизоры / Продукт]");
     }
 
     public void specsLinkClick() {
-        JSExecutor.scrollBy(0, 300);
+        JavaScriptHelper.scrollBy(0, 300);
         tvProductPage.pressCharacteristicButton();
-        JSExecutor.scrollBy(0, 600);
+        JavaScriptHelper.scrollBy(0, 600);
     }
 
     public String getCompanyValue(String companyColumnName) {

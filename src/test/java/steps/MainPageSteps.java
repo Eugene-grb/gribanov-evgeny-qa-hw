@@ -1,18 +1,16 @@
 package steps;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import pages.MainPage;
+import lombok.extern.log4j.Log4j2;
+import web.pages.MainPage;
 
+@Log4j2
 public class MainPageSteps {
-
-    private static final Logger logger = LogManager.getLogger(MainPageSteps.class);
 
     private final MainPage mainPage;
 
     public MainPageSteps(MainPage mainPage) {
         this.mainPage = mainPage;
-        logger.info("Открыта страница [Стартовая страница DNS]");
+        log.info("Открыта страница [Стартовая страница DNS]");
     }
 
     public void clickTVsLink() {

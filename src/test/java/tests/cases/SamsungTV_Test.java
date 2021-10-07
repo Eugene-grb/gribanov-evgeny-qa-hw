@@ -1,13 +1,13 @@
 package tests.cases;
 
-import helpers.Screenshots;
-import models.TVObject;
-import models.TVObjectBuilder;
-import models.valueObjects.*;
+import web.helpers.ScreenshotHelper;
+import models.testobjects.TVObject;
+import models.testobjects.TVObjectBuilder;
+import models.valueobjects.*;
 import org.junit.jupiter.api.Test;
-import pages.MainPage;
-import pages.TVProductPage;
-import pages.TVsCatalogPage;
+import web.pages.MainPage;
+import web.pages.TVProductPage;
+import web.pages.TVsCatalogPage;
 import steps.MainPageSteps;
 import steps.TVProductPageSteps;
 import steps.TVsCatalogPageSteps;
@@ -22,10 +22,10 @@ public class SamsungTV_Test extends BaseTest {
     String EXPECTED_MAX_DIAGONAL = "80";
     String EXPECTED_MIN_DIAGONAL = "60";
     String EXPECTED_REFRESH_RATE = "120 Гц";
-    String EXPECTED_PRODUCT = "Телевизор LED Samsung QE75Q950TSUXRU серый";
+    String EXPECTED_PRODUCT = "Телевизор LED Samsung QE75Q900TSUXRU черный";
     String EXPECTED_PAGE_TITLE =
-            "Купить 75\" (189 см) Телевизор LED Samsung QE75Q950TSUXRU серый в интернет магазине DNS. " +
-                    "Характеристики, цена Samsung QE75Q950TSUXRU | 8165296";
+            "Купить 75\" (189 см) Телевизор LED Samsung QE75Q900TSUXRU черный в интернет магазине DNS. " +
+                    "Характеристики, цена Samsung QE75Q900TSUXRU | 1669169";
 
     // Создать объект
     TVObjectBuilder builder = new TVObjectBuilder(
@@ -45,7 +45,7 @@ public class SamsungTV_Test extends BaseTest {
         // 2. Act
         TVProductPageSteps newTvProductPage = openPageTest(tvObject);
         SamsungTVsPageAssertions pageAssert = new SamsungTVsPageAssertions(newTvProductPage);
-        Screenshots.takeScreenshot("ProductPage_Product", "temp", driver);
+        ScreenshotHelper.takeScreenshot("ProductPage_Product", "temp");
 
         // 3. Assert
         pageAssert.pageTitleEquals(EXPECTED_PAGE_TITLE);
@@ -60,7 +60,7 @@ public class SamsungTV_Test extends BaseTest {
         // 2. Act
         TVProductPageSteps tvProductPageSteps = openPageTest(tvObject);
         tvProductPageSteps.specsLinkClick();
-        Screenshots.takeScreenshot("ProductPage_Characteristics", "temp", driver);
+        ScreenshotHelper.takeScreenshot("ProductPage_Characteristics", "temp");
 
         SamsungTVsPageAssertions pageAssert = new SamsungTVsPageAssertions(tvProductPageSteps);
 
@@ -84,7 +84,7 @@ public class SamsungTV_Test extends BaseTest {
         // Страница "Каталог телевизоров"
         TVsCatalogPageSteps tVsCatalogPageSteps = new TVsCatalogPageSteps(new TVsCatalogPage(driver));
         // -- Сделать скриншот страницы
-        Screenshots.takeScreenshot("TvCatalog_Original", "temp", driver);
+        ScreenshotHelper.takeScreenshot("TvCatalog_Original", "temp");
 
         // -- Установить сортировку "Сначала дорогие"
         tVsCatalogPageSteps.sortByExpensive();
@@ -112,7 +112,7 @@ public class SamsungTV_Test extends BaseTest {
         tVsCatalogPageSteps.applyFiltersButtonClick();
 
         // -- Сделать скриншот страницы
-        Screenshots.takeScreenshot("TvCatalog_WithFilters", "temp", driver);
+        ScreenshotHelper.takeScreenshot("TvCatalog_WithFilters", "temp");
 
         // -- Нажать на ссылку первого товара в каталоге
         tVsCatalogPageSteps.firstProductLinkClick(EXPECTED_PRODUCT);
