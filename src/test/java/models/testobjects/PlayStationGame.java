@@ -2,8 +2,8 @@ package models.testobjects;
 
 import lombok.Builder;
 import lombok.Data;
-import models.valueobjects.PlayStationGame.Platform;
-import models.valueobjects.PlayStationGame.ReleaseYear;
+import models.valueobjects.Platform;
+import models.valueobjects.ReleaseYear;
 
 import java.io.Serializable;
 

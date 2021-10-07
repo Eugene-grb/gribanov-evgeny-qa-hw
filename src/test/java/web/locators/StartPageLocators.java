@@ -13,16 +13,13 @@ public class StartPageLocators extends BasePage {
     @CacheLookup
     public WebElement linkYes;
 
-    // ССЫЛКА "ТВ и мультимедиа"
     @FindBy(xpath = "//a[@class='ui-link menu-desktop__root-title' and contains(text(),'ТВ и мультимедиа')]")
     public WebElement multimediaMainCatalogLink;
 
-    // ССЫЛКА "PlayStation"
-    @FindBy(xpath = "//a[@class='ui-link menu-desktop__second-level' and contains(text(),'PlayStation')]")
-    public WebElement playStationsSubcategoryLink;
+    @FindBy(xpath = "//a[@class='ui-link menu-desktop__second-level' and contains(text(),'Видеоигры')]")
+    public WebElement gameSubcategoryLink;
 
-    // ССЫЛКА "Консоли PlayStation"
-    @FindBy(xpath = "//a[@class='ui-link menu-desktop__popup-link' and contains(text(),'Консоли PlayStation')]")
+    @FindBy(xpath = "//a[@class='ui-link menu-desktop__popup-link' and contains(text(),'Игры для PlayStation')]")
     public WebElement playStationsSubcategoryLinkPopup;
 
     public StartPageLocators(WebDriver driver) {

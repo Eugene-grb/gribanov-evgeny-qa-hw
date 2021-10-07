@@ -25,4 +25,5 @@ public class StartPageSteps {
         driver.get("https://www.dns-shop.ru/");
         log.info("Open Dns start page");
     }
+
 }

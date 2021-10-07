@@ -1,4 +1,4 @@
-package models.valueobjects.PlayStationGame;
+package models.valueobjects;
 
 import java.io.Serializable;
 

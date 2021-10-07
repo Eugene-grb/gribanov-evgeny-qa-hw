@@ -8,14 +8,13 @@ import web.locators.StartPageLocators;
 public class StartPage extends BasePage {
 
     // СТРАНИЦА С ЛОКАТОРАМИ
-    public StartPageLocators startPageLocators;
+    private StartPageLocators startPageLocators;
 
     public StartPage(WebDriver driver) {
         super(driver);
-    PageFactory.initElements(driver, this.startPageLocators);
+        PageFactory.initElements(driver, this.startPageLocators);
     }
 
-    // ВЕРНУТЬ ОБЕРНУТЫЕ ВЕБЭЛЕМЕНТЫ
     public Link linkYes() {
         return new Link(startPageLocators.linkYes);
     }
@@ -25,7 +24,7 @@ public class StartPage extends BasePage {
     }
 
     public Link playStationsSubcategoryLink() {
-        return new Link(startPageLocators.playStationsSubcategoryLink);
+        return new Link(startPageLocators.gameSubcategoryLink);
     }
 
     public  Link playStationsSubcategoryLinkPopup() {
