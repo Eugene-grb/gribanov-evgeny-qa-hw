@@ -1,4 +1,4 @@
-package steps;
+package steps.junitSteps;
 
 import lombok.extern.log4j.Log4j2;
 import web.pages.MainPage;

@@ -1,17 +1,17 @@
 package tests.assertions;
 
 import lombok.extern.log4j.Log4j2;
-import steps.TVProductPageSteps;
+import steps.junitSteps.TVProductPageSteps;
 import web.pages.BasePage;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Log4j2
-public class SamsungTVsPageAssertions {
+public class SamsungTV_Assertions {
 
     TVProductPageSteps tvProductPageSteps;
 
-    public SamsungTVsPageAssertions(TVProductPageSteps tvProductPageSteps) {
+    public SamsungTV_Assertions(TVProductPageSteps tvProductPageSteps) {
         this.tvProductPageSteps = tvProductPageSteps;
     }
 

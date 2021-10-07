@@ -8,11 +8,11 @@ import org.junit.jupiter.api.Test;
 import web.pages.MainPage;
 import web.pages.TVProductPage;
 import web.pages.TVsCatalogPage;
-import steps.MainPageSteps;
-import steps.TVProductPageSteps;
-import steps.TVsCatalogPageSteps;
+import steps.junitSteps.MainPageSteps;
+import steps.junitSteps.TVProductPageSteps;
+import steps.junitSteps.TVsCatalogPageSteps;
 import tests.BaseTest;
-import tests.assertions.SamsungTVsPageAssertions;
+import tests.assertions.SamsungTV_Assertions;
 
 
 public class SamsungTV_Test extends BaseTest {
@@ -44,7 +44,7 @@ public class SamsungTV_Test extends BaseTest {
 
         // 2. Act
         TVProductPageSteps newTvProductPage = openPageTest(tvObject);
-        SamsungTVsPageAssertions pageAssert = new SamsungTVsPageAssertions(newTvProductPage);
+        SamsungTV_Assertions pageAssert = new SamsungTV_Assertions(newTvProductPage);
         ScreenshotHelper.takeScreenshot("ProductPage_Product", "temp");
 
         // 3. Assert
@@ -62,7 +62,7 @@ public class SamsungTV_Test extends BaseTest {
         tvProductPageSteps.specsLinkClick();
         ScreenshotHelper.takeScreenshot("ProductPage_Characteristics", "temp");
 
-        SamsungTVsPageAssertions pageAssert = new SamsungTVsPageAssertions(tvProductPageSteps);
+        SamsungTV_Assertions pageAssert = new SamsungTV_Assertions(tvProductPageSteps);
 
         // 3. Assert
         pageAssert.modelNameEquals(EXPECTED_COMPANY);
