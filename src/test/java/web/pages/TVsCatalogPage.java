@@ -11,6 +11,7 @@ public class TVsCatalogPage extends BasePage {
 
     private static final String SORT_CHEAP_BUTTON = "//a[@class='ui-link ui-link_blue']/descendant-or-self::*[text()='Сначала недорогие']";
     private static final String SORT_EXPENSIVE_BUTTON = "//span[@class='ui-radio__content']/descendant-or-self::*[text()='Сначала дорогие']";
+    private static final String SORT_BUTTON = "//span[@class='ui-radio__content']/descendant-or-self::*[text()='%s']";
     private static final String APPLY_FILTERS_BUTTON = "//div[@class='apply-filters-float-btn']";
     private static final String FIRST_PRODUCT_IN_LIST_LINK = "//div[@data-id='product']/*[@class='catalog-product__name ui-link ui-link_black'][1]";
     private static final String INITIAL_VALUE_DIAGONAL_FIELD = "//div[@data-id='fr[p2]']/descendant-or-self::*[@placeholder='от 22']";
@@ -34,6 +35,17 @@ public class TVsCatalogPage extends BasePage {
         sortExpensiveButton.click();
         log.info("Установлена сортировка 'сначала дорогие'");
     }
+
+    public void setSortBy(String sortBy) {
+        Button sortCheapButton = new Button(By.xpath(SORT_CHEAP_BUTTON));
+        sortCheapButton.click();
+        log.info("Открыто меню сортировки по цене");
+        String SET_SORT = String.format(SORT_BUTTON, sortBy);
+        Button sortExpensiveButton = new Button(By.xpath(SET_SORT));
+        sortExpensiveButton.click();
+        log.info("Установлена сортировка: " + sortBy);
+    }
+
 
     // СОРТИРОВКА ПО ФИЛЬТРУ "КОМПАНИЯ"
     public void setCompanyCheckbox(String company) {
@@ -126,6 +138,11 @@ public class TVsCatalogPage extends BasePage {
     // ОТКРЫТЬ ПЕРВЫЙ ПРОДУКТ В СПИСКЕ
     public void firstProductLinkClick(String product) {
         WaitHelper.firstProductMustBe(By.xpath(FIRST_PRODUCT_IN_LIST_LINK), product);
+        Link linkProduct = new Link(By.xpath(FIRST_PRODUCT_IN_LIST_LINK));
+        linkProduct.openInNewWindow();
+        log.info("Нажата ссылка первого продукта в списке");
+    }
+    public void firstProductLink() {
         Link linkProduct = new Link(By.xpath(FIRST_PRODUCT_IN_LIST_LINK));
         linkProduct.openInNewWindow();
         log.info("Нажата ссылка первого продукта в списке");
