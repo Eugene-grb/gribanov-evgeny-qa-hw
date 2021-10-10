@@ -12,7 +12,7 @@ import org.junit.runner.RunWith;
         tags = "@table1",
         // вывод шагов в окне запуска
         stepNotifications = false,
-        plugin = "json:target/cucumber.json"
+        plugin = "json:target/cucumber-report/cucumber.json"
 )
 public class RunCucumberTest {
 }
