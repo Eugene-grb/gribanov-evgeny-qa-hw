@@ -15,7 +15,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Duration;
 
-@Slf4j
+@Log4j2
 public class ScreenshotHelper {
 
     private static final Duration SLEEP_TIME = Duration.ofSeconds(5);

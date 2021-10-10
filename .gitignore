@@ -1,6 +1,7 @@
 ### Intellij ###
 .idea/
 /target
+.allure
 
 # File-based project format
 *.iws

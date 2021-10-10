@@ -102,7 +102,6 @@ public class CucumberTVSteps {
         JavaScriptHelper.scrollBy(0,400);
         tVsCatalogPage.screenRefreshRateAccordion();
         tVsCatalogPage.setScreenRefreshRateFilterCheckbox(tvObject.getRefreshRate().getRefreshRate());
-        tVsCatalogPage.screenRefreshRateAccordion();
         log.info("***** Установлены фильтры из таблицы с одной колонкой");
     }
 
@@ -116,7 +115,6 @@ public class CucumberTVSteps {
         JavaScriptHelper.scrollBy(0,400);
         tVsCatalogPage.screenRefreshRateAccordion();
         tVsCatalogPage.setScreenRefreshRateFilterCheckbox(tvObject.getRefreshRate().getRefreshRate());
-        tVsCatalogPage.screenRefreshRateAccordion();
         log.info("***** Установлены фильтры из таблицы с двумя колонками");
     }
 
@@ -137,7 +135,6 @@ public class CucumberTVSteps {
         JavaScriptHelper.scrollBy(0,400);
         tVsCatalogPage.screenRefreshRateAccordion();
         tVsCatalogPage.setScreenRefreshRateFilterCheckbox(tvObject.getRefreshRate().getRefreshRate());
-        tVsCatalogPage.screenRefreshRateAccordion();
         log.info("***** Установлена сортировка и фильтры из таблицы с тремя колонками");
     }
 }

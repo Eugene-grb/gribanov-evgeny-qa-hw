@@ -1,6 +1,8 @@
 package web.pages;
 
 import lombok.extern.log4j.Log4j2;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import web.elements.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -25,6 +27,7 @@ public class TVsCatalogPage extends BasePage {
         Button sortCheapButton = new Button(By.xpath(SORT_CHEAP_BUTTON));
         sortCheapButton.click();
         log.info("Открыто меню сортировки по цене");
+
         String SET_SORT = String.format(SORT_BUTTON, sortBy);
         Button sortExpensiveButton = new Button(By.xpath(SET_SORT));
         sortExpensiveButton.click();
