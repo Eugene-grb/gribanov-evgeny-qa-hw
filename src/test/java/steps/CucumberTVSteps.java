@@ -109,7 +109,7 @@ public class CucumberTVSteps {
     @И("Установлены фильтры из таблицы с двумя колонками")
     public void setFiltersFromTable2(Map<String, String> filters) {
         TVObject tvObject = new TVObject(
-                new Company(filters.get("Производитель").split(" ")[0]),
+                new Company(filters.get("Производитель")),
                 new RefreshRate(filters.get("Частота обновления экрана (Гц)")));
         JavaScriptHelper.scrollBy(0,600);
         tVsCatalogPage.setCompanyCheckbox(tvObject.getCompany().getCompany());
@@ -131,6 +131,7 @@ public class CucumberTVSteps {
         TVObject tvObject = new TVObject(
                 new Company(filterByCompany),
                 new RefreshRate(filterByRefreshRate));
+
         JavaScriptHelper.scrollBy(0,600);
         tVsCatalogPage.setCompanyCheckbox(tvObject.getCompany().getCompany());
         JavaScriptHelper.scrollBy(0,400);

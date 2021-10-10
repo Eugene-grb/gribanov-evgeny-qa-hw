@@ -16,8 +16,5 @@ public class TVObject implements Serializable {
     this.company = company;
     this.refreshRate = refreshRate;
   }
-
-  public TVObject(Company company) {
-  }
 }
 

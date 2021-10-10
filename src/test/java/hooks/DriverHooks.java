@@ -11,7 +11,7 @@ import web.driver.WebDriverFactory;
 public class DriverHooks {
     protected static WebDriver driver;
 
-    String env = System.getProperty("browser", "firefox").toLowerCase();
+    String env = System.getProperty("browser", "chrome").toLowerCase();
 
     @Before
     public void setUp() {

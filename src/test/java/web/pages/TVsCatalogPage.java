@@ -31,7 +31,6 @@ public class TVsCatalogPage extends BasePage {
         log.info("Установлена сортировка: " + sortBy);
     }
 
-
     // СОРТИРОВКА ПО ФИЛЬТРУ "КОМПАНИЯ"
     public void setCompanyCheckbox(String company) {
         String SET_COMPANY_CHECKBOX = String.format(SET_FILTER_VALUE, company);
@@ -72,7 +71,7 @@ public class TVsCatalogPage extends BasePage {
     public void applyFiltersButtonClick() {
         Button buttonApply = new Button(By.xpath(APPLY_FILTERS_BUTTON));
         buttonApply.click();
-        log.info("Нажата кнопка \"Применить\"");
+        log.info("Нажата кнопка 'Применить'");
     }
 
     // ОТКРЫТЬ ПЕРВЫЙ ПРОДУКТ В СПИСКЕ

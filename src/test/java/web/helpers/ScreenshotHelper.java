@@ -1,6 +1,7 @@
 package web.helpers;
 
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.support.ui.Sleeper;
 import ru.yandex.qatools.ashot.AShot;
 import ru.yandex.qatools.ashot.Screenshot;
@@ -14,7 +15,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Duration;
 
-@Log4j2
+@Slf4j
 public class ScreenshotHelper {
 
     private static final Duration SLEEP_TIME = Duration.ofSeconds(5);

@@ -2,7 +2,6 @@ package web.elements;
 
 import web.helpers.*;
 import org.openqa.selenium.By;
-import org.openqa.selenium.interactions.Actions;
 
 public class Link extends BaseElement{
 

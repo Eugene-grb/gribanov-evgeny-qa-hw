@@ -15,7 +15,6 @@ public class BaseElement {
     private static final Duration DURATION_TIMEOUT = Duration.ofSeconds(3);
     private static final Duration DURATION_SLEEP = Duration.ofSeconds(3);
 
-    // базовый конструктор
     public BaseElement(By by) {
         this.by = by;
         WaitHelper.initWait(DURATION_TIMEOUT, DURATION_SLEEP);
