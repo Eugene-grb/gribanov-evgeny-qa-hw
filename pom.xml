@@ -17,6 +17,7 @@
         <!-- MAVEN -->
         <maven-compiler-plugin>3.8.1</maven-compiler-plugin>
         <maven-surefire-plugin>3.0.0-M5</maven-surefire-plugin>
+        <allure-maven>2.10.0</allure-maven>
 
         <!-- DEPENDENCIES -->
         <!-- selenium -->
@@ -39,6 +40,10 @@
         <!-- utilities -->
         <lombok>1.18.20</lombok>
         <ashot>1.5.4</ashot>
+        <!-- allure -->
+        <allure-junit5>2.15.0</allure-junit5>
+        <aspectjweaver>1.9.7</aspectjweaver>
+        <allure-cucumber6-jvm>2.15.0</allure-cucumber6-jvm>
     </properties>
 
     <dependencies>
@@ -114,6 +119,24 @@
             <version>${cucumber}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-junit5</artifactId>
+            <version>${allure-junit5}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectjweaver}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-cucumber6-jvm</artifactId>
+            <version>${allure-cucumber6-jvm}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
 
@@ -123,6 +146,12 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-plugin}</version>
+                <configuration>
+                    <argLine>
+                        -Dfile.encoding=UTF-8
+                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectjweaver}/aspectjweaver-${aspectjweaver}.jar"
+                    </argLine>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -131,6 +160,15 @@
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>${allure-maven}</version>
+                <configuration>
+                    <reportVersion>2.4.1</reportVersion>
+                    <resultsDirectory>allure-results</resultsDirectory>
                 </configuration>
             </plugin>
         </plugins>
